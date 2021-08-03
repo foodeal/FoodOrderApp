@@ -1,0 +1,75 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '10.0'
+
+target 'FoodOrderPartner' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+
+  use_react_native!(:path => config["reactNativePath"])
+
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
+  pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
+
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
+  pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
+
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
+
+  pod 'ReactNativeART', :path => '../node_modules/@react-native-community/art'
+
+  pod 'RNCPicker', :path => '../node_modules/@react-native-picker/picker'
+
+  pod 'RNScreens', :path => '../node_modules/react-native-screens'
+
+  target 'FoodOrderPartnerTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  # use_flipper!()
+
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
+        config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
+        config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+        xcconfig_path = config.base_configuration_reference.real_path
+        xcconfig = File.read(xcconfig_path)
+        new_xcconfig = xcconfig.sub('HEADER_SEARCH_PATHS = $(inherited)', 'HEADER_SEARCH_PATHS = $(inherited) "$(PODS_TARGET_SRCROOT)/ReactCommon/jsiexecutor"')
+        File.open(xcconfig_path, "w") { |file| file << new_xcconfig }
+      end
+    end
+  end
+end
+
+
+# target 'OneSignalNotificationServiceExtension' do
+#   pod 'OneSignal', '>= 3.0', '< 4.0'
+# end
