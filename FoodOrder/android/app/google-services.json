@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "608886584770",
+    "firebase_url": "https://foodealz-38907.firebaseio.com",
+    "project_id": "foodealz-38907",
+    "storage_bucket": "foodealz-38907.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608886584770:android:697042197270684c53d25b",
+        "android_client_info": {
+          "package_name": "com.foodorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608886584770-almes2lolnqo94m81pkvpq13hg2mihh5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeHCShgldPB-XwTNDHQgU3oJnieaZkDME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608886584770-almes2lolnqo94m81pkvpq13hg2mihh5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
