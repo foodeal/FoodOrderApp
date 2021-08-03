@@ -1,4 +1,4 @@
-# Foodealz Partner
+# FoodOrder
 > A beautiful food deal app
 
 #### Project Structure
