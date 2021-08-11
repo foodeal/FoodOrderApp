@@ -63,9 +63,9 @@ const WebVieww = ({ navigation, route }) => {
         if (res.data == "Coupon added Succefuly") {
           updatenbre(status)
           const notificationObj = {
-            app_id: 'f750576c-4163-4a7c-8fe4-3b501b921ad0',
-            contents: { en: "Vous avez une nouvelle réservation payée" },
-            headings: { en : "Nouvelle Réservation payée" },
+            app_id: '643687b9-61ec-48ba-916b-7d1b22e2875a',
+            contents: { en: "You have a new paid reservation" },
+            headings: { en : "New Paid Reservation" },
             include_player_ids: route.params.itemData.deals.restaurant.OnesignalId.split(",")
           };
           console.log(`${route.params.itemData.deals.restaurant.OnesignalId}`)

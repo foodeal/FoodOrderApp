@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FoodOrder</string>
-    <string name="facebook_app_id">XXXXXXXXXXXXX</string>
-    <string name="fb_login_protocol_scheme">fbXXXXXXXXX</string>
-    <string name="server_client_id">XXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">535199284476599</string>
+    <string name="fb_login_protocol_scheme">fb535199284476599</string>
+    <string name="server_client_id">738127827023-8hmicbbm3ruh95rfbecckh93dr12ok4a.apps.googleusercontent.com</string>
 </resources>

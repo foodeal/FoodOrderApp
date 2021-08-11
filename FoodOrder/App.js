@@ -144,24 +144,10 @@ const App = () => {
       dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
       SplashScreen.hide();
       /* O N E S I G N A L   S E T U P */
-      OneSignal.setAppId("5bbb0476-bbb3-4baa-81e3-f4ad1ce99eba");
+      OneSignal.setAppId("c3372faf-22dc-4a7f-989a-fa75c7b28ef0");
       OneSignal.setLogLevel(6, 0);
       OneSignal.setRequiresUserPrivacyConsent(false);
-      // OneSignal.promptForPushNotificationsWithUserResponse(response => {
-      //   OSLog("Prompt response:", response);
-      // });
-      // const notificationObj = {
-      //   app_id: 'f750576c-4163-4a7c-8fe4-3b501b921ad0',
-      //   contents: { en: "Bonjour cher client" },
-      //   include_player_ids: ['9ac8e735-6e59-4138-89e3-789fb1c0942b']
-      // };
-      // const jsonString = JSON.stringify(notificationObj);
-
-      // OneSignal.postNotification(jsonString, (success) => {
-      //   console.log("Success:", success);
-      // }, (error) => {
-      //   console.log("Error:", error);
-      // });
+     
 
       const partnerId = (await OneSignal.getDeviceState()).userId
       // await AsyncStorage.setItem('OnesignalId', partnerId);

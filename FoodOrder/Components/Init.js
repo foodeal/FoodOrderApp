@@ -282,10 +282,10 @@ const Init = ({ navigation }) => {
         />
 
         <View>
-          <Text style={styles.title}>{en.TITLE_1}</Text>
-          <Text style={styles.title}>{en.TITLE_2}</Text>
-          <Text style={styles.titlelow}>{en.TITLE_3}</Text>
-          <Text style={styles.titlelow}>{en.TITLE_4}</Text>
+          <Text style={styles.title}>{en.TITLE_3}</Text>
+          {/* <Text style={styles.title}>{en.TITLE_2}</Text>
+          <Text style={styles.titlelow}>{en.TITLE_3}</Text> */}
+          {/* <Text style={styles.titlelow}>{en.TITLE_4}</Text> */}
         </View>
 
 

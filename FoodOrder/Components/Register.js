@@ -624,15 +624,15 @@ const Register = ({ navigation }) => {
 
 
 
-        <View style={{ top: hp('25%'), width: wp('95%'), alignItems: 'center' }}>
+        <View style={{ top: hp('23%'), width: wp('95%'), alignItems: 'center' }}>
           <View style={styles.seperator}><Text style={styles.text}>{en.LINK_SIGNIN} </Text><Text style={styles.Textblue} onPress={() => { navigation.navigate('SignInScreen') }}>{en.BUTTON_CONNECT}</Text></View>
-          <View style={styles.seperator1}>
+          {/* <View style={styles.seperator1}>
             <Text style={styles.text}>{en.TEXT_CONDITION}
               <Text style={styles.Textblue} > {en.TEXT_CONDITION_1} </Text>
               <Text> {en.TEXT_CONDITION_2}</Text>
               <Text style={styles.Textblue} > {en.TEXT_CONDITION_3}</Text>
             </Text>
-          </View>
+          </View> */}
         </View>
 
       </ImageBackground>
@@ -751,7 +751,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     borderRadius: 5,
-    marginTop: hp('17%'),
+    marginTop: hp('14%'),
 
   },
   btntext: {
@@ -796,7 +796,7 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    height: hp('123%'), // 70% of height device screen
+    height: hp('124%'), // 70% of height device screen
     width: wp('100%'),   // 80% of width device screen
     justifyContent: "center",
     alignItems: "center",
@@ -804,7 +804,7 @@ const styles = StyleSheet.create({
   logoStyle: {
     height: Platform.OS === 'ios' ? hp('20%') : hp('25%'), // 70% of height device screen
     width: wp('80%'),
-    marginTop: hp('-15%'),
+    marginTop: hp('-21s%'),
   },
   errorMsg: {
     color: '#FF0000',
@@ -843,8 +843,8 @@ const styles = StyleSheet.create({
   form1: {
     flexDirection: 'row',
     // marginTop: hp('2%'),
-    top: Platform.OS === 'ios' ? hp('66%') : hp('79%'),
-    borderBottomWidth:  Platform.OS === 'ios' ? null: 2,
+    top: Platform.OS === 'ios' ? hp('66%') : hp('82%'),
+    borderBottomWidth:  Platform.OS === 'ios' ? null: null,
     borderBottomColor: Platform.OS === 'ios' ? null:'#f2f2f2',
     paddingBottom: 5,
     // height: hp('20%'),
@@ -853,8 +853,8 @@ const styles = StyleSheet.create({
   form2: {
     flexDirection: 'row',
     // marginTop: hp('2%'),
-    top: Platform.OS === 'ios' ? hp('72%') : hp('86%'),
-    borderBottomWidth:  Platform.OS === 'ios' ? null:2,
+    top: Platform.OS === 'ios' ? hp('72%') : hp('88%'),
+    borderBottomWidth:  Platform.OS === 'ios' ? null:null,
     borderBottomColor:  Platform.OS === 'ios' ? null:'#f2f2f2',
     paddingBottom: 5,
     // height: hp('20%'),

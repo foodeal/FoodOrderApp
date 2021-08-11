@@ -239,9 +239,6 @@ const CardItemDetails = ({ navigation, route }) => {
         // console.log(favorites);
     }
 
-    const ConditionCall = () => {
-        Linking.openURL('https://foodealz.com/conditions-generales-de-vente/');
-    };
 
     const dialCall = () => {
 
@@ -260,7 +257,7 @@ const CardItemDetails = ({ navigation, route }) => {
     const myCustomShare = async () => {
         if (Platform.OS) {
             const shareOptions = {
-                message: itemdata.deals.deal_description + ' ' + `Vous pouvez avoir cette offre grâce à l'application FoodOrder `,
+                message: itemdata.deals.deal_description + ' ' + `You can have this offer through the FoodOrder app `,
                 // urls: [files.image1, files.image2]
             }
             try {
@@ -271,7 +268,7 @@ const CardItemDetails = ({ navigation, route }) => {
             }
         } else {
             const shareOptions = {
-                message: itemdata.deals.deal_description + ' ' + ` Vous pouvez avoir cette offre grâce à l'application FoodOrder `,
+                message: itemdata.deals.deal_description + ' ' + ` You can have this offer through the FoodOrder app`,
                 // urls: [files.image1, files.image2]
             }
             try {
@@ -396,9 +393,9 @@ const CardItemDetails = ({ navigation, route }) => {
                     navigation.navigate('VaucherScreen', { itemData: newdataqr, payement: 'Sur place', code: codee })
                     modalizeRefReserveConfir.current?.close()
                     const notificationObj = {
-                        app_id: 'f750576c-4163-4a7c-8fe4-3b501b921ad0',
-                        contents: { en: "Vous avez une nouvelle réservation non payée" },
-                        headings: { en: "Nouvelle Réservation non payée" },
+                        app_id: '643687b9-61ec-48ba-916b-7d1b22e2875a',
+                        contents: { en: "You have a new unpaid reservation" },
+                        headings: { en: "New unpaid reservation"},
                         include_player_ids: itemdata.deals.restaurant.OnesignalId.split(",")
                     };
                     console.log(`${itemdata.deals.restaurant.OnesignalId}`)
@@ -711,7 +708,7 @@ const CardItemDetails = ({ navigation, route }) => {
 
                 <View style={{ flexDirection: 'row', marginTop: hp('0%') }}>
                     <Text style={{ textAlign: 'center', fontSize: 13, marginLeft: wp('1%'), marginTop: hp('0.2%'), color: '#686663', fontFamily: 'Rubik-Regular' }}>By reserving this basket, you accept the
-                    <Text style={{ textDecorationLine: 'underline' }} onPress={ConditionCall}> General Conditions of Use</Text> of FoodOrder</Text>
+                    <Text style={{ textDecorationLine: 'underline' }} > General Conditions of Use</Text> of FoodOrder</Text>
                 </View>
 
                 <View>
