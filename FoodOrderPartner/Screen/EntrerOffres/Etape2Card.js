@@ -33,7 +33,7 @@ const Etape2Card = ({ itemData, navigation }) => {
         dlc: '',
         sexe: '',
         quantité: itemData.qt,
-        fin: itemData.dlc == "" ? `Aujourd'hui` : itemData.dlc,
+        fin: itemData.dlc == "" ? `Today` : itemData.dlc,
         minimumDate: new Date(),
     });
 
@@ -52,7 +52,7 @@ const Etape2Card = ({ itemData, navigation }) => {
         var listOfCheck = await JSON.parse(response) || [];
         const preitem = listOfCheck.filter(function (item) { return item.id === itemData.id });
         const postsItems = listOfCheck.filter(function (item) { return item.id !== itemData.id });
-        postsItems.push({ "id": itemData.id, "partnerId": preitem[0].partnerId, "discount": preitem[0].discount, "description": preitem[0].description, 'name': preitem[0].name, 'image': preitem[0].image, 'qt': preitem[0].qt, "PriceBeforeDiscount": preitem[0].PriceBeforeDiscount, "PriceAfterDiscoun": preitem[0].PriceAfterDiscoun, "dlc": fin, "start": `Aujourd'hui`, startingDat: preitem[0].startingDat, expiryDat: expiry })
+        postsItems.push({ "id": itemData.id, "partnerId": preitem[0].partnerId, "discount": preitem[0].discount, "description": preitem[0].description, 'name': preitem[0].name, 'image': preitem[0].image, 'qt': preitem[0].qt, "PriceBeforeDiscount": preitem[0].PriceBeforeDiscount, "PriceAfterDiscoun": preitem[0].PriceAfterDiscoun, "dlc": fin, "start": `Today`, startingDat: preitem[0].startingDat, expiryDat: expiry })
         await AsyncStorage.removeItem('checkin');
         await AsyncStorage.setItem('checkin', JSON.stringify(postsItems));
         // console.log(JSON.stringify(postsItems))

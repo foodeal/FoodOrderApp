@@ -65,7 +65,7 @@ const Etape1Card = ({ itemData, navigation, check }) => {
         } else {
             dlc = dlcc
         }
-        listOfCheck.push({ "id": itemData.id, "partnerId": user_id, "discount": itemData.discount.split('%')[0], "description": itemData.description, 'name': itemData.nom, 'image': imagee, 'qt': quantité, "PriceBeforeDiscount": itemData.PriceBeforeDiscount, "PriceAfterDiscoun": itemData.PriceAfterDiscoun, "dlc": dlc, "start": `Aujourd'hui`, startingDat: data.startingDat, expiryDat: expiry })
+        listOfCheck.push({ "id": itemData.id, "partnerId": user_id, "discount": itemData.discount.split('%')[0], "description": itemData.description, 'name': itemData.nom, 'image': imagee, 'qt': quantité, "PriceBeforeDiscount": itemData.PriceBeforeDiscount, "PriceAfterDiscoun": itemData.PriceAfterDiscoun, "dlc": dlc, "start": `Today`, startingDat: data.startingDat, expiryDat: expiry })
         await AsyncStorage.removeItem('checkin');
         await AsyncStorage.setItem('checkin', JSON.stringify(listOfCheck));
         console.log(JSON.stringify(listOfCheck))

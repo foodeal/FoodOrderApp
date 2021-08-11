@@ -131,7 +131,7 @@
        // console.log('user token: ', userToken);   
        dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
        SplashScreen.hide();
-       OneSignal.setAppId("f750576c-4163-4a7c-8fe4-3b501b921ad0");
+       OneSignal.setAppId("643687b9-61ec-48ba-916b-7d1b22e2875a");
        OneSignal.setLogLevel(6, 0);
        OneSignal.setRequiresUserPrivacyConsent(false);
         /* O N E S I G N A L  H A N D L E R S */

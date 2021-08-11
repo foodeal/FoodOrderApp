@@ -19,7 +19,7 @@ const Etape3Card = ({ itemData, navigation }) => {
         birthday: '',
         sexe: '',
         quantité: itemData.qt,
-        fin: itemData.dlc == "" ? "Aujourd'hui":itemData.dlc
+        fin: itemData.dlc == "" ? "Today":itemData.dlc
     });
 
 
