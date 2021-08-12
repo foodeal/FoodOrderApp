@@ -76,6 +76,9 @@ const Register = ({ navigation }) => {
     setData({ ...data, age: res, birthday: exdate })
     hideDatePicker();
   };
+
+  //Function called when user fill in all fields and press sign up button
+  //////////////////////////////////////
   const AddUser = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (data.mail == "" || data.password == "" || data.username == "" || data.repassword == "") {
@@ -103,6 +106,7 @@ const Register = ({ navigation }) => {
     }
 
   }
+  //////////////////////////////////////
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -117,19 +121,6 @@ const Register = ({ navigation }) => {
         ...data,
         username: val,
         check_textInputChange: false,
-        isValidUsername: false
-      });
-    }
-  }
-  const handleValidUsername = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidUsername: true
-      });
-    } else {
-      setData({
-        ...data,
         isValidUsername: false
       });
     }
@@ -162,19 +153,6 @@ const Register = ({ navigation }) => {
       setData({
         ...data,
         repassword: val,
-        isValidRePassword: false
-      });
-    }
-  }
-  const VerifierPassword = (val) => {
-    if (data.password == val.trim()) {
-      setData({
-        ...data,
-        isValidRePassword: true
-      });
-    } else {
-      setData({
-        ...data,
         isValidRePassword: false
       });
     }
@@ -626,13 +604,6 @@ const Register = ({ navigation }) => {
 
         <View style={{ top: hp('23%'), width: wp('95%'), alignItems: 'center' }}>
           <View style={styles.seperator}><Text style={styles.text}>{en.LINK_SIGNIN} </Text><Text style={styles.Textblue} onPress={() => { navigation.navigate('SignInScreen') }}>{en.BUTTON_CONNECT}</Text></View>
-          {/* <View style={styles.seperator1}>
-            <Text style={styles.text}>{en.TEXT_CONDITION}
-              <Text style={styles.Textblue} > {en.TEXT_CONDITION_1} </Text>
-              <Text> {en.TEXT_CONDITION_2}</Text>
-              <Text style={styles.Textblue} > {en.TEXT_CONDITION_3}</Text>
-            </Text>
-          </View> */}
         </View>
 
       </ImageBackground>
@@ -844,8 +815,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // marginTop: hp('2%'),
     top: Platform.OS === 'ios' ? hp('66%') : hp('82%'),
-    borderBottomWidth:  Platform.OS === 'ios' ? null: null,
-    borderBottomColor: Platform.OS === 'ios' ? null:'#f2f2f2',
+    borderBottomWidth: Platform.OS === 'ios' ? null : null,
+    borderBottomColor: Platform.OS === 'ios' ? null : '#f2f2f2',
     paddingBottom: 5,
     // height: hp('20%'),
     position: 'absolute'
@@ -854,8 +825,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // marginTop: hp('2%'),
     top: Platform.OS === 'ios' ? hp('72%') : hp('88%'),
-    borderBottomWidth:  Platform.OS === 'ios' ? null:null,
-    borderBottomColor:  Platform.OS === 'ios' ? null:'#f2f2f2',
+    borderBottomWidth: Platform.OS === 'ios' ? null : null,
+    borderBottomColor: Platform.OS === 'ios' ? null : '#f2f2f2',
     paddingBottom: 5,
     // height: hp('20%'),
     position: 'absolute'

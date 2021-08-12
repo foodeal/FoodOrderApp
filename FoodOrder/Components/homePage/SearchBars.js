@@ -28,7 +28,6 @@ const SearchBars = ({ navigation, route }) => {
     distance: null,
     temps: null
   });
-  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
   const [dateDe, setDateDe] = React.useState(new Date(Date.now()))
   const [dateA, setDateA] = React.useState(new Date())
   const [Pickupfrom, setPickFrom] = React.useState('')
@@ -36,8 +35,6 @@ const SearchBars = ({ navigation, route }) => {
   const modalizeRef = useRef(null);
   const modalizeRefplageHoraire = useRef(null);
   const [Horaire, sethoraire] = React.useState('All day')
-  const buttonBGE = data.toggleE ? '#36b3c9' : '#b4b4b4'
-  const buttonBGC = data.toggleC ? '#36b3c9' : '#b4b4b4'
   const calcDistance = (item) => {
     const start = {
       latitude: data.origin[0].latitude,
@@ -93,21 +90,6 @@ const SearchBars = ({ navigation, route }) => {
       ...data,
       distance: val
     });
-  }
-  const changetemps = (val) => {
-    setData({
-      ...data,
-      temps: val
-    });
-  }
-
-  const _onPressE = () => {
-    const newState = !data.toggleE
-    setData({ ...data, toggleE: newState })
-  }
-  const _onPressC = () => {
-    const newState = !data.toggleC
-    setData({ ...data, toggleC: newState })
   }
 
   const renderInner = () => (
@@ -226,11 +208,11 @@ const SearchBars = ({ navigation, route }) => {
 
 
   const renderHeader = () => {
-    return <View style={{ flexDirection: 'row', backgroundColor: 'white', borderBottomWidth: 0.5, borderBottomColor: '#b4b4b4b4b4',marginTop:hp('4%') }} >
-      <Iconn name="chevron-back-outline" style={{ paddingLeft: wp('2%'), color: 'black', marginTop:  Platform.OS === 'ios' ? hp('2.5%'): hp('1%') }} size={30} onPress={() => { navigation.goBack() }} />
+    return <View style={{ flexDirection: 'row', backgroundColor: 'white', borderBottomWidth: 0.5, borderBottomColor: '#b4b4b4b4b4', marginTop: hp('4%') }} >
+      <Iconn name="chevron-back-outline" style={{ paddingLeft: wp('2%'), color: 'black', marginTop: Platform.OS === 'ios' ? hp('2.5%') : hp('1%') }} size={30} onPress={() => { navigation.goBack() }} />
       <SearchBar placeholder="A partner or a product"
         lightTheme
-        containerStyle={{ backgroundColor: 'white', width: wp('80%'), height: hp('9%'), borderBottomColor: 'white', borderTopColor: 'white',marginTop: Platform.OS === 'ios' ? hp('0.7%'): hp('-1%') }}
+        containerStyle={{ backgroundColor: 'white', width: wp('80%'), height: hp('9%'), borderBottomColor: 'white', borderTopColor: 'white', marginTop: Platform.OS === 'ios' ? hp('0.7%') : hp('-1%') }}
         clearIcon round editable={true}
         value={data.search}
         onChangeText={(text) => searchFilterFunction(text)}
@@ -239,7 +221,7 @@ const SearchBars = ({ navigation, route }) => {
         <Iconn
           name="options-outline"
           size={30}
-          style={{ color: 'black', marginTop:  Platform.OS === 'ios' ? hp('2.5%'): hp('1%') }}
+          style={{ color: 'black', marginTop: Platform.OS === 'ios' ? hp('2.5%') : hp('1%') }}
         />
       </TouchableOpacity>
 
@@ -248,6 +230,8 @@ const SearchBars = ({ navigation, route }) => {
 
   };
 
+  //Functions allow user to search in the list of offers 
+  ////////////////////////////////////
   const searchFilterFunction = (text) => {
     const newData = data.temp.filter((item) => {
       const itemData = `${item.deals.restaurant.name.toUpperCase()}   
@@ -261,19 +245,9 @@ const SearchBars = ({ navigation, route }) => {
     })
   };
 
-  // data.temp.filter((item) => {
-  //   const De = dateDe
-  //   const A = dateA
-  //   const compare = moment(item.expirydate).isBetween(De,A)
-  //   // console.log(compare)
-  //   if (compare) {
-  //     return console.log(item.deals.deal_id)
-  //   }
-  // })
-
   const filterfunction = () => {
     var Data = []
-    
+
     if (Data.length == 0) {
       if (parseInt(data.distance) != 0) {
         var newData = data.temp.filter((item) => {
@@ -342,7 +316,7 @@ const SearchBars = ({ navigation, route }) => {
           const De = dateDe
           const A = dateA
           // const compare1 = moment(De).isSameOrAfter(item.startingdate)
-          const compare = moment(item.expirydate).isBetween(De,A)
+          const compare = moment(item.expirydate).isBetween(De, A)
           // console.log(compare)
           if (compare) {
             const itemData = `${item.deals.deal_id}`
@@ -357,7 +331,7 @@ const SearchBars = ({ navigation, route }) => {
         var newData = Data.filter((item) => {
           const De = dateDe
           const A = dateA
-          const compare = moment(item.expirydate).isBetween(De,A)
+          const compare = moment(item.expirydate).isBetween(De, A)
           // console.log(compare)
           if (compare) {
             const itemData = `${item.deals.deal_id}`
@@ -368,13 +342,13 @@ const SearchBars = ({ navigation, route }) => {
         Data = newData
       }
     }
-    
+
     setData({
       ...data,
       data: Data
     })
   };
-
+  ////////////////////////////////////
   const renderItemdeal = ({ item }) => {
     return (
       <Deal itemData={item} favorite={route.params.favorite} token={route.params.token} totalDuration={route.params.totalDuration} navigation={navigation} />

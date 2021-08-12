@@ -35,18 +35,6 @@ const DealsActifs = ({ navigation }) => {
   const [refreching, setRefreching] = React.useState(false);
   const [isvisible, setIsVisible] = React.useState(false);
 
-  const timer = (item) => {
-    const createdtime = moment(item.timepickup, 'YYYY/MM/DD')
-    const datee = moment().format()
-    const date = moment(datee, 'YYYY/MM/DD')
-    // console.log(createdtime,'fg',date)
-    if (moment(date).isSame(createdtime) == false) {
-      // console.log(moment(createdtime).isSame(date))
-      onFinich1(item)
-    } else {
-    }
-  }
-
   useEffect(() => {
     setTimeout(async () => {
       let user_id;
@@ -75,6 +63,8 @@ const DealsActifs = ({ navigation }) => {
     getData(data.userid)
   }
 
+  // Function called when the interface in charge to display all the offre reserved and not paid by the user for this day
+  /////////////////////////////////
   const getData = async (id) => {
     const url = `${config.url}/ActiveResCou/${id}`;
     await fetch(url)
@@ -104,23 +94,9 @@ const DealsActifs = ({ navigation }) => {
 
       })
   };
+  /////////////////////////////////
 
-  const onFinich1 = (item) => {
-    axios
-      .put(`${config.url}/reservedCouponUpdate/${item.id}`, {
-        type: 'expire',
-        motif: 'Panier expiré'
-      })
-      .then(res => getData(data.userid), handleCancel())
-      .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
-  }
-
-  const showDialog = () => {
-    setIsVisible(true);
-  };
-  const handleCancel = () => {
-    setIsVisible(false);
-  };
+  
   const MotifInputChange = (val) => {
     setData({
       ...data,
@@ -128,6 +104,8 @@ const DealsActifs = ({ navigation }) => {
     });
   }
 
+  // function called when the user want to cancel his reservation
+  /////////////////////////////////
   const onFinich = (key) => {
     if (data.motif == '') {
       Toast.show('Please Choose the reason for your Cancellation')
@@ -142,6 +120,7 @@ const DealsActifs = ({ navigation }) => {
         .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
     }
   }
+  /////////////////////////////////
 
 
   const onOpen = (e) => {
@@ -164,6 +143,8 @@ const DealsActifs = ({ navigation }) => {
     })
   };
 
+  // view called when user press on delete button
+  /////////////////////////////////
   const render = () => (
     <View>
       <View style={{ height: hp('7%'), marginTop: hp('4%'), marginLeft: wp('2%'), flexDirection: 'row', width: wp('67%') }}>
@@ -193,6 +174,7 @@ const DealsActifs = ({ navigation }) => {
       </View>
     </View>
   )
+  /////////////////////////////////
 
   const renderItem = ({ item }) => {
     return (

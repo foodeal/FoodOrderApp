@@ -7,75 +7,8 @@ import {
     SafeAreaView, Dimensions
 } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Button from 'react-native-paper/lib/commonjs/components/Button';
-import Dialog from "react-native-dialog";
-import StarRating from 'react-native-star-rating';
-import axios from 'axios';
-import Toast from 'react-native-simple-toast';
-import config from '../config.js'
-import en from '../model/local_en.json'
 
 const DealsExpiredCard = ({ navigation, itemData }) => {
-    const [isvisible, setIsVisible] = React.useState(false);
-    const [rating, setRating] = React.useState(0);
-
-    const showdialog = () => {
-        setIsVisible(true);
-    };
-
-
-    const hidedialog = () => {
-        setIsVisible(false);
-        // console.log(Math.round(rate))
-        if (parseInt(itemData.rating) == 0) {
-            axios
-                .put(`${config.url}/rating`, {
-                    restaurantId: itemData.restaurant_id,
-                    rating: rating
-                })
-                .then(res => { if (res.data == "rating updated!") { Toast.show('Thank you for your evaluation'); setRating(0) } })
-                .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
-        } else if (rating == 0) {
-            setRating(0)
-        } else {
-            let rate = (parseInt(itemData.rating) + rating) / 2
-            axios
-                .put(`${config.url}/rating`, {
-                    restaurantId: itemData.restaurant_id,
-                    rating: Math.round(rate)
-                })
-                .then(res => { if (res.data == "rating updated!") { Toast.show('Thank you for your evaluation'); setRating(0) } })
-                .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
-        }
-    };
-
-    const handleRating = (rating) => {
-        setRating(rating);
-    }
-
-    const dialog = () => (
-        <View style={{ width: wp('80%') }}>
-            <View style={{ width: wp('80%'), marginBottom: hp('1%') }}>
-                <Text style={{ textAlign: 'center', fontWeight: "bold", fontSize: 18, lineHeight: 24 }}>Evaluation of the quality and service of our partner</Text>
-            </View>
-            <StarRating
-                disabled={false}
-                maxStars={5}
-                rating={rating}
-                emptyStarColor={'#0095ff'}
-                selectedStar={(rating) => handleRating(rating)}
-                fullStarColor={'#0095ff'}
-                starSize={30}
-                containerStyle={{ marginLeft: wp('-1%'), alignContent: 'center', justifyContent: 'center', marginTop: hp('3%') }}
-                starStyle={{ marginLeft: wp('5%'), marginRight: wp('4%') }}
-            />
-            <View>
-                <Button style={styles.connectbtnn} mode='outlined' onPress={() => { hidedialog() }}>
-                    <Text style={styles.btntextt}>Send</Text>
-                </Button>
-            </View>
-        </View>
-    );
 
     return (
         <SafeAreaView style={{ height: hp('13%'), width: wp('90%'), marginLeft: wp('2%'), marginTop: hp('1%'), borderRadius: 15 }}>
@@ -92,12 +25,6 @@ const DealsExpiredCard = ({ navigation, itemData }) => {
                     <Text style={{ textAlign: 'left', fontSize: 12, marginLeft: wp('3%'), marginBottom: hp('1%'), color: '#b4b4b4', fontFamily: 'Rubik-Bold', fontWeight: 'bold', marginTop: hp('-0.5%') }}>{itemData.name}</Text>
                     <Text style={{ textAlign: 'left', fontSize: 12, marginLeft: wp('3%'), marginBottom: hp('1%'), color: '#b4b4b4', fontFamily: 'Rubik-Bold', fontWeight: 'bold', marginTop: hp('-0.5%') }}>Pattern: {itemData.motif}</Text>
                 </View>
-
-                {/* <View>
-                    <Button style={styles.connectbtn} mode='outlined' onPress={() => {}}>
-                        <Text style={styles.btntext}>Expirer</Text>
-                    </Button>
-                </View> */}
 
             </View>
 

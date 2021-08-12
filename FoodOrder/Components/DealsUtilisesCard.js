@@ -7,78 +7,10 @@ import {
     SafeAreaView
 } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Button from 'react-native-paper/lib/commonjs/components/Button';
-import Dialog from "react-native-dialog";
-import StarRating from 'react-native-star-rating';
 import { TouchableOpacity } from "react-native-gesture-handler";
-import axios from 'axios';
-import Toast from 'react-native-simple-toast';
-import config from '../config.js'
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import en from '../model/local_en.json'
+
 
 const DealsUtilisesCard = ({ itemData, navigation }) => {
-
-    const [isvisible, setIsVisible] = React.useState(false);
-    const [rating, setRating] = React.useState(0);
-    const [voter, setVoter] = React.useState(itemData.voter)
-    const showdialog = () => {
-        setIsVisible(true);
-    };
-    const hidedialog = () => {
-        setIsVisible(false);
-        if (parseInt(itemData.rating) == 0) {
-            axios
-                .put(`${config.url}/rating`, {
-                    restaurantId: itemData.restaurant_id,
-                    rating: rating,
-                    noter: true,
-                    coupon_id: itemData.key
-                })
-                .then(res => { if (res.data == "rating updated!") { Toast.show('Thank you for your evaluation'); setVoter(true); setRating(0) } })
-                .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
-        } else if (rating == 0) {
-            setRating(0)
-        } else {
-            let rate = (parseInt(itemData.rating) + rating) / 2
-            axios
-                .put(`${config.url}/rating`, {
-                    restaurantId: itemData.restaurant_id,
-                    rating: Math.round(rate),
-                    noter: true,
-                    coupon_id: itemData.key
-                })
-                .then(res => { if (res.data == "rating updated!") { Toast.show('Thank you for your evaluation'); setVoter(true); setRating(0) } })
-                .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
-        }
-    };
-
-    const handleRating = (rating) => {
-        setRating(rating);
-    }
-    const dialog = () => (
-        <View style={{ width: wp('80%') }}>
-            <View style={{ width: wp('80%'), marginBottom: hp('1%') }}>
-                <Text style={{ textAlign: 'center', fontWeight: "bold", fontSize: 18, lineHeight: 24 }}>Evaluation de la qualité et du service du notre partenaire</Text>
-            </View>
-            <StarRating
-                disabled={false}
-                maxStars={5}
-                rating={rating}
-                emptyStarColor={'#0095ff'}
-                selectedStar={(rating) => handleRating(rating)}
-                fullStarColor={'#0095ff'}
-                starSize={30}
-                containerStyle={{ marginLeft: wp('-1%'), alignContent: 'center', justifyContent: 'center', marginTop: hp('3%') }}
-                starStyle={{ marginLeft: wp('5%'), marginRight: wp('4%') }}
-            />
-            <View>
-                <Button style={styles.connectbtnn} mode='outlined' onPress={() => { hidedialog() }}>
-                    <Text style={styles.btntextt}>Envoyer</Text>
-                </Button>
-            </View>
-        </View>
-    );
 
     return (
         <SafeAreaView style={{ height: hp('12%'), width: wp('68%'), marginLeft: wp('0%'), marginTop: hp('0.5%'), borderRadius: 15 }}>

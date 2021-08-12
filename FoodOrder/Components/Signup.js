@@ -42,6 +42,8 @@ const Signup = ({ navigation }) => {
   const ref_input2 = useRef();
 
 
+  //Google Configuration Authentification
+  ////////////////////////////////////
   if (Platform.OS === 'android') {
     GoogleSignin.configure({
       forceCodeForRefreshToken: true,
@@ -53,7 +55,11 @@ const Signup = ({ navigation }) => {
       iosClientId: config.iosClientId
     })
   }
+////////////////////////////////////
 
+
+  // Facebook Authentification
+  ////////////////////////////////////
   const _authFB = () => {
     LoginManager.logInWithPermissions(["public_profile", "email"]).then(
       function (result) {
@@ -72,7 +78,6 @@ const Signup = ({ navigation }) => {
       }
     );
   }
-
   const _setDataFB = async () => {
     // get token from facebook
     const tokenData = await AccessToken.getCurrentAccessToken().then(
@@ -127,7 +132,6 @@ const Signup = ({ navigation }) => {
       console.log("Error get data");
     }
   }
-
   const apiGraphFace = async (token) => {
 
     const resface = await fetch('https://graph.facebook.com/v2.10/me?fields=id,name,email,first_name,last_name,picture.type(large).width(500)&access_token=' + token)
@@ -149,6 +153,11 @@ const Signup = ({ navigation }) => {
 
     return resface;
   }
+  ////////////////////////////////////
+
+
+  // Local Authentification (Sign In)
+  ////////////////////////////////////
   const controle = async () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (data.mail == "" || data.password == "") {
@@ -192,70 +201,11 @@ const Signup = ({ navigation }) => {
     }
 
   }
-
-  const textInputChange = (val) => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (val.trim().length >= 4 && reg.test(val.trim()) === true) {
-      setData({
-        ...data,
-        mail: val,
-        check_textInputChange: true,
-        isValidUser: true
-      });
-    } else {
-      setData({
-        ...data,
-        mail: val,
-        check_textInputChange: false,
-        isValidUser: false
-      });
-    }
-  }
-  const handleValidUser = (val) => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (val.trim().length >= 4 || reg.test(val.trim()) === true || val.trim().length == 0) {
-      setData({
-        ...data,
-        isValidUser: true
-      });
-    } else {
-      setData({
-        ...data,
-        isValidUser: false
-      });
-    }
-  }
-  const updateSecureTextEntry = () => {
-    if (data.secureTextEntry) {
-      setData({
-        ...data,
-        secureTextEntry: false
-      });
-    } else {
-      setData({
-        ...data,
-        secureTextEntry: true
-      });
-    }
-  }
-
-  const handlePasswordChange = (val) => {
-    // if (val.trim().length >= 8) {
-    setData({
-      ...data,
-      password: val,
-      isValidPassword: true
-    })
-    // } else {
-    //   setData({
-    //     ...data,
-    //     password: val,
-    //     isValidPassword: false
-    //   });
-    // }
-  }
+  ////////////////////////////////////
 
 
+  // Google Authentification
+  ////////////////////////////////////
   const signInn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -310,7 +260,11 @@ const Signup = ({ navigation }) => {
       }
     }
   };
+  ////////////////////////////////////
 
+
+  // Apple Authentification
+  ////////////////////////////////////
   const AppleSignIn = async () => {
     const userInfo = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
@@ -359,7 +313,61 @@ const Signup = ({ navigation }) => {
     // console.log(token);
     // TODO: Send the token to backend
   };
+  ////////////////////////////////////
 
+  const textInputChange = (val) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (val.trim().length >= 4 && reg.test(val.trim()) === true) {
+      setData({
+        ...data,
+        mail: val,
+        check_textInputChange: true,
+        isValidUser: true
+      });
+    } else {
+      setData({
+        ...data,
+        mail: val,
+        check_textInputChange: false,
+        isValidUser: false
+      });
+    }
+  }
+  const handleValidUser = (val) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (val.trim().length >= 4 || reg.test(val.trim()) === true || val.trim().length == 0) {
+      setData({
+        ...data,
+        isValidUser: true
+      });
+    } else {
+      setData({
+        ...data,
+        isValidUser: false
+      });
+    }
+  }
+  const updateSecureTextEntry = () => {
+    if (data.secureTextEntry) {
+      setData({
+        ...data,
+        secureTextEntry: false
+      });
+    } else {
+      setData({
+        ...data,
+        secureTextEntry: true
+      });
+    }
+  }
+
+  const handlePasswordChange = (val) => {
+    setData({
+      ...data,
+      password: val,
+      isValidPassword: true
+    })
+  }
   return (
 
     <View style={styles.MainContainer}>
@@ -472,16 +480,16 @@ const Signup = ({ navigation }) => {
               style={styles.ImageIconStyleapple}
             />
           </TouchableOpacity> */}
-         {
+          {
             Platform.OS === 'ios' ?
-            <AppleButton
-            buttonStyle={AppleButton.Style.BLACK}
-            buttonType={AppleButton.Type.DEFAULT}
-            style={styles.ImageIconStyleapple}
-            onPress={() => AppleSignIn()}
-          />
-          :
-          null
+              <AppleButton
+                buttonStyle={AppleButton.Style.BLACK}
+                buttonType={AppleButton.Type.DEFAULT}
+                style={styles.ImageIconStyleapple}
+                onPress={() => AppleSignIn()}
+              />
+              :
+              null
           }
 
         </View>
@@ -526,7 +534,7 @@ const styles = StyleSheet.create({
   },
   TextInput: {
     // flex: 1,
-    height: Platform.OS === 'ios' ? hp('4%'):hp('8%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('4%') : hp('8%'), // 70% of height device screen
     // paddingLeft:10,
     // marginTop: Platform.OS === 'ios' ? 0 : -12,
     // margin: 15,
@@ -543,7 +551,7 @@ const styles = StyleSheet.create({
   },
   TextInputp: {
     // flex: 1,
-    height: Platform.OS === 'ios' ? hp('4%'):hp('8%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('4%') : hp('8%'), // 70% of height device screen
     // paddingLeft:10,
     // marginTop: Platform.OS === 'ios' ? 0 : -12,
     // margin: 15,
@@ -609,9 +617,9 @@ const styles = StyleSheet.create({
 
   },
   logoStyle: {
-    height: Platform.OS === 'ios' ? hp('20%'):hp('25%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('20%') : hp('25%'), // 70% of height device screen
     width: wp('80%'),
-    marginTop: Platform.OS === 'ios' ? hp('0%'):hp('6%'), // 70% of height device screen
+    marginTop: Platform.OS === 'ios' ? hp('0%') : hp('6%'), // 70% of height device screen
   },
   errorMsg: {
     color: '#FF0000',

@@ -9,9 +9,9 @@ import config from '../config.js'
 import Toast from 'react-native-simple-toast';
 import en from '../model/local_en.json'
 
-const Reset = ({ navigation,route }) => {
+const Reset = ({ navigation, route }) => {
 
-    // console.log(route.params.code)
+  // console.log(route.params.code)
 
   const [data, setData] = React.useState({
     password: "",
@@ -23,6 +23,8 @@ const Reset = ({ navigation,route }) => {
   });
   const ref_input2 = useRef();
 
+  //Function called when user press on reset password button
+  ////////////////////////////////////
   const onReset = () => {
     if (data.password != data.repassword) {
       Toast.show("Please verify your password")
@@ -34,9 +36,11 @@ const Reset = ({ navigation,route }) => {
         })
         .then(res => { Toast.show("Your password has been successfully changed !"); navigation.navigate('SignInScreen') }
         )
-        .catch(err =>  Toast.show(en.TOAST_CHECK_ERROR));
+        .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
     }
   }
+  ////////////////////////////////////
+
 
   const handlePasswordChange = (val) => {
     if (val.trim().length >= 8) {
@@ -116,7 +120,7 @@ const Reset = ({ navigation,route }) => {
             placeholderTextColor="#666666"
             secureTextEntry={data.secureTextEntry ? true : false}
             autoCapitalize="none"
-            onChangeText={(val) => { handlePasswordChange(val)}}
+            onChangeText={(val) => { handlePasswordChange(val) }}
             onSubmitEditing={() => { ref_input2.current.focus(); }}
             autoFocus={true}
             blurOnSubmit={false}
@@ -188,7 +192,7 @@ const Reset = ({ navigation,route }) => {
 
         <Button style={styles.button} mode="contained" title={en.BUTTON_RESET_PW} onPress={() => { onReset() }}>
           {en.BUTTON_RESET_PW}
-  </Button>
+        </Button>
       </ImageBackground>
     </View>
   )
@@ -210,7 +214,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
   logoStyle: {
-    height: Platform.OS === 'ios' ? hp('20%'):hp('25%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('20%') : hp('25%'), // 70% of height device screen
     width: wp('60%'),
   },
 
@@ -251,7 +255,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     color: "#3a4047",
-    marginTop:hp('2%')
+    marginTop: hp('2%')
   },
   image: {
     height: hp('120%'), // 70% of height device screen
@@ -261,23 +265,23 @@ const styles = StyleSheet.create({
 
   },
   TextInputp: {
-    height: Platform.OS === 'ios' ? hp('4%'):hp('8%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('4%') : hp('8%'), // 70% of height device screen
     width: hp('35%'),
     marginTop: Platform.OS === 'ios' ? -5 : -15,
     paddingLeft: wp('3%'),
-    paddingRight:  wp('3%'),
+    paddingRight: wp('3%'),
     color: '#05375a',
   },
   errorMsg: {
     color: '#FF0000',
     textAlign: "left",
     fontSize: 12,
-    marginLeft:wp('-15%')
+    marginLeft: wp('-15%')
   },
   errorMsgc: {
     color: '#FF0000',
     textAlign: "left",
     fontSize: 12,
-    marginLeft:wp('-25%')
+    marginLeft: wp('-25%')
   },
 });

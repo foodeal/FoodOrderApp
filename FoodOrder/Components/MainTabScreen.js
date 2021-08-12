@@ -12,17 +12,6 @@ import en from '../model/local_en.json'
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = ({token,name,neww}) => {
-  // const [locationn, setlocationn] = React.useState([]);
-  // useEffect(() => {
-  //   let location;
-  //   location = [];
-  //   AsyncStorage.getItem('location').then((value) => {
-  //   console.log("ho",JSON.parse(value))
-  //   location = value
-  //   setlocationn(JSON.parse(location))
-  // }); 
-  // }, []);
-// console.log("hi",token)
   return (
     <Tab.Navigator initialRouteName="Home" activeColor="#36b3c9" inactiveColor="grey" shifting={false} barStyle={{ backgroundColor: 'white' }} >
       <Tab.Screen

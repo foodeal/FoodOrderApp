@@ -26,7 +26,10 @@ const Init = ({ navigation }) => {
     mail: '',
   });
 
+  const { signIn, Asguest } = React.useContext(AuthContext);
 
+  //Google Configuration Authentification
+  ////////////////////////////////////
   if (Platform.OS === 'android') {
     GoogleSignin.configure({
       forceCodeForRefreshToken: true,
@@ -38,8 +41,11 @@ const Init = ({ navigation }) => {
       iosClientId: config.iosClientId
     })
   }
-  const { signIn, Asguest } = React.useContext(AuthContext);
+  ////////////////////////////////////
 
+
+  // Apple Authentification
+  ////////////////////////////////////
   const AppleSignIn = async () => {
     const userInfo = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
@@ -88,6 +94,11 @@ const Init = ({ navigation }) => {
     // console.log(token);
     // TODO: Send the token to backend
   };
+  ////////////////////////////////////
+
+
+  // Google Authentification
+  ////////////////////////////////////
   const signInn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -142,29 +153,11 @@ const Init = ({ navigation }) => {
       }
     }
   };
-  const isSignedIn = async () => {
-    const isSignedIn = await GoogleSignin.isSignedIn();
-    if (!isSignedIn) {
-      getCurrentUserInfo()
-    } else {
-      console.log('Please Login')
-    }
-  };
-  const getCurrentUserInfo = async () => {
-    try {
-      const userInfo = await GoogleSignin.signInSilently();
-      setUser(userInfo);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        alert('User has not signed in yet');
-        console.log('User has not signed in yet');
-      } else {
-        alert("Something went wrong. Unable to get user's info");
-        console.log("Something went wrong. Unable to get user's info");
-      }
-    }
-  };
+  ////////////////////////////////////
 
+
+  // Facebook Authentification
+  ////////////////////////////////////
   const _authFB = () => {
     const dhis = this
     LoginManager.logInWithPermissions(["public_profile", "email"]).then(
@@ -240,7 +233,6 @@ const Init = ({ navigation }) => {
       console.log("Error get data");
     }
   }
-
   const apiGraphFace = async (token) => {
 
     const resface = await fetch('https://graph.facebook.com/v2.10/me?fields=id,name,email,first_name,last_name,picture.type(large).width(500)&access_token=' + token)
@@ -262,11 +254,13 @@ const Init = ({ navigation }) => {
 
     return resface;
   }
+  ////////////////////////////////////
+
 
   const GuestAuth = () => {
     Asguest();
   }
- 
+
 
 
   return (
@@ -333,22 +327,22 @@ const Init = ({ navigation }) => {
           </TouchableOpacity> */}
           {
             Platform.OS === 'ios' ?
-            <AppleButton
-            buttonStyle={AppleButton.Style.BLACK}
-            buttonType={AppleButton.Type.DEFAULT}
-            style={styles.ImageIconStyleapple}
-            onPress={() => AppleSignIn()}
-          />
-          :
-          null
+              <AppleButton
+                buttonStyle={AppleButton.Style.BLACK}
+                buttonType={AppleButton.Type.DEFAULT}
+                style={styles.ImageIconStyleapple}
+                onPress={() => AppleSignIn()}
+              />
+              :
+              null
           }
-        
+
 
         </View>
         <View style={styles.seperator}><Text style={styles.text}>{en.LINK_SIGNUP} </Text><Text style={styles.Textblue} onPress={() => { navigation.navigate('SignUpScreen') }}>{en.BUTTON_SIGNUP}</Text></View>
         <View style={styles.seperator1}>
           <Text style={styles.text2}>{en.TEXT_CONDITION}
-           <Text style={styles.Textblue} >{en.TEXT_CONDITION_1}</Text>
+            <Text style={styles.Textblue} >{en.TEXT_CONDITION_1}</Text>
             <Text>{en.TEXT_CONDITION_2}</Text>
             <Text style={styles.Textblue} >{en.TEXT_CONDITION_3}</Text>
           </Text>
@@ -446,7 +440,7 @@ const styles = StyleSheet.create({
     marginTop: hp('1%'),
     flexDirection: "row",
     width: wp('95%'),
-    alignContent:'center'
+    alignContent: 'center'
   },
   text: {
     fontFamily: "Rubik-Regular",
@@ -481,7 +475,7 @@ const styles = StyleSheet.create({
 
   },
   logoStyle: {
-    height: Platform.OS === 'ios' ? hp('20%'):hp('25%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('20%') : hp('25%'), // 70% of height device screen
     width: wp('80%'),
     marginTop: hp('11%')
   },

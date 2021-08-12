@@ -92,6 +92,9 @@ const Map = ({ navigation, token }) => {
     }, 500);
   }, [navigation])
 
+
+  // Function for current position
+  ///////////////////////////////////
   const locationenable = () => {
     if (Platform.OS == 'ios') {
       Geolocation.requestAuthorization();
@@ -121,7 +124,11 @@ const Map = ({ navigation, token }) => {
         });
     }
   }
+  ///////////////////////////////////
 
+
+  //Functions allow to take the name of place through coordinates
+  ///////////////////////////////////
   const reversegeo = async () => {
     Geolocation.getCurrentPosition(
       (position) => {
@@ -186,81 +193,7 @@ const Map = ({ navigation, token }) => {
       coordinates: newdata
     })
   }
-
-  const searchFilterFunction = async () => {
-    var response = await AsyncStorage.getItem('listOflikes');
-    var listOfLikes = await JSON.parse(response);
-    setfavorites(
-      listOfLikes
-    );
-    const newData = listOfLikes.filter((item) => {
-      const itemData = `${item.restaurant_id}`;
-      const textData = parseInt(item.deals.restaurant.restaurant_id);
-      return itemData.indexOf(textData) > -1;
-    });
-    if (newData == '') {
-      setfavorite(false)
-    } else {
-      setfavorite(true)
-    }
-  };
-
-  const _updatefavorite = async () => {
-    let response = await AsyncStorage.getItem('listOflikes');
-    var listOfLikes = await JSON.parse(response) || [];
-    listOfLikes.push({ "restaurant_id": item.deals.restaurant.restaurant_id })
-    await AsyncStorage.removeItem('listOflikes');
-    await AsyncStorage.setItem('listOflikes', JSON.stringify(listOfLikes));
-    setfavorites(
-      listOfLikes
-    );
-    // console.log(favorites);
-  }
-
-  const favoritecall = async () => {
-    let user_id;
-    user_id = null;
-    try {
-      user_id = await AsyncStorage.getItem('userid');
-    } catch (e) {
-      console.log(e);
-    }
-    if (favorite) {
-      axios
-        .delete(`${config.url}/deleteFavorite`, {
-          data: {
-            user_id: parseInt(user_id),
-            restaurant_id: parseInt(item.deals.restaurant.restaurant_id)
-          }
-        })
-        .then(res => { if (res.data == "favorite Deleted!") { removeFavorit(item.deals.restaurant.restaurant_id); Toast.show('Restaurant supprimer de votre liste des favoris'); setfavorite(false) } })
-        .catch(err => alert(err));
-    } else {
-      axios
-        .post(`${config.url}/users/favorite`, {
-          user_id: parseInt(user_id),
-          restaurant_id: parseInt(item.deals.restaurant.restaurant_id)
-        })
-        .then(res => { if (res.data == "favorite added Succefuly created") { _updatefavorite(); Toast.show('Restaurant ajouter à votre liste des favoris'); setfavorite(true); } else if (res.data == "favorite already exists") { Toast.show('favorite existe déja') } })
-        .catch(err => alert(err));
-    }
-  }
-
-  const removeFavorit = async (id) => {
-    // console.log(id)
-    try {
-      const posts = await AsyncStorage.getItem('listOflikes');
-      let listOfLikes = JSON.parse(posts);
-      const postsItems = listOfLikes.filter(function (item) { return item.restaurant_id !== id });
-      //   console.log( JSON.stringify(postsItems))
-      // updating 'posts' with the updated 'postsItems'
-      await AsyncStorage.removeItem('listOflikes');
-      await AsyncStorage.setItem('listOflikes', JSON.stringify(postsItems));
-
-    } catch (error) {
-      console.log('error: ', error);
-    }
-  };
+  ///////////////////////////////////
   const getData = async () => {
     const url = `${config.url}/deals`;
     let location;
@@ -342,72 +275,6 @@ const Map = ({ navigation, token }) => {
       })
   };
 
-  const requestLocationPermission = async () => {
-    if (Platform.OS === 'ios') {
-      var response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-      console.log('iPhone: ' + response);
-
-      if (response === 'granted') {
-        locateCurrentPosition();
-      }
-    } else {
-      var response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-      console.log('Android: ' + response);
-
-      if (response === 'granted') {
-        locateCurrentPosition();
-      }
-    }
-  }
-
-  const locateCurrentPosition = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        // console.log(JSON.stringify(position));
-        setData({
-          ...data,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        })
-        const region = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.012,
-          longitudeDelta: 0.01
-        };
-        map.current.animateToRegion(region, 500);
-      },
-      error => setData({
-        ...data,
-        error: error.message
-      }),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 }
-    )
-  }
-  const geolocation = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setData({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null
-        });
-      },
-      error => setData({ ...data, error: error.message }),
-    );
-  }
-
-  const _getLocation = async () => {
-    await Geolocation.getCurrentPosition(position => {
-      const region = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: 0.012,
-        longitudeDelta: 0.01
-      };
-      map.current.animateToRegion(region, 500);
-    });
-  };
 
   const info = (dataa, details) => {
     const newdata = data.coordinates.filter((item) => {
@@ -430,6 +297,8 @@ const Map = ({ navigation, token }) => {
     };
     map.current.animateToRegion(region, 500);
   }
+
+
   const renderCarouselItem = ({ item }) => (
     <TouchableRipple onPress={() => { navig(item) }} >
       <View style={styles.cardContainer}>
@@ -477,44 +346,7 @@ const Map = ({ navigation, token }) => {
     )
   }
 
-  const PindragReversegeo = async (region) => {
 
-    Geocoder.init("AIzaSyD1lN2ArTGGjhdZrR1JI5bXj58JU9V5iUE"); // use a valid API key
-    Geocoder.from(region.latitude, region.longitude)
-      .then(json => {
-        console.log(json.results[1].formatted_address);
-        // var addressComponent = json.results[0].address_components;
-        const loc = {
-          latitude: region.latitude,
-          longitude: region.longitude,
-          nameLocation: json.results[1].formatted_address
-        }
-        // console.log(addressComponent)
-        data.favorite = []
-        data.favorite.push(loc)
-        const newdata = data.coordinates.filter((item) => {
-          if (calcDistance2(item.deals.restaurant.latitude, item.deals.restaurant.longitude, region.latitude, region.longitude) < 30.0) {
-            console.log('loc', item.id)
-            return item;
-          }
-        });
-        setData({
-          ...data,
-          nameLocation: json.results[1].formatted_address,
-          latitude: region.latitude,
-          longitude: region.longitude,
-          region: region,
-          favorite: JSON.stringify(data.favorite)
-        })
-        // console.log(addressComponent[2].long_name);
-      })
-      .catch(error => console.warn(error));
-  }
-
-  const onRegionChange = (region) => {
-    PindragReversegeo(region)
-  }
-  // navigator.geolocation = require('@react-native-community/geolocation');
   return (
     <View style={styles.container}>
       <View style={{ flex: 8 }}>

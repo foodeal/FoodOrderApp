@@ -22,17 +22,8 @@ const VaucherScreen = ({ route, navigation, }) => {
         data: route.params.itemData,
         username: '',
         payment: route.params.payement,
-        codeFoodealzz: route.params.code
+        codeFoodorder: route.params.code
     });
-
-    // console.log(data.prix)
-    const _showdialog = () => {
-        setIsVisible(true);
-    };
-
-    const _hidedialog = () => {
-        setIsVisible(false);
-    };
 
     useEffect(() => {
         setTimeout(async () => {
@@ -46,8 +37,8 @@ const VaucherScreen = ({ route, navigation, }) => {
             } catch (e) {
                 console.log(e);
             }
-            setData({ ...data, username: username, codeFoodealzz: route.params.code })
-            Toast.show("Veuillez trouver votre coupon dans la rubrique réservations")
+            setData({ ...data, username: username, codeFoodorder: route.params.code })
+            Toast.show("Please find your coupon in the reservations section")
             const handleBackPress = () => {
                 navigator.popToTop()
                 return true
@@ -60,19 +51,10 @@ const VaucherScreen = ({ route, navigation, }) => {
 
     let logoFromFile = require('../Images/logo.png');
 
-    const qrdata = {
-        deal_description: data.data.deal_description,
-        nombre_de_personne: data.data.nbre,
-        user_id: data.data.user_id,
-        payment: route.params.payement,
-        deal_scheduled_id: data.data.deal_scheduled_id,
-        name_restaurant: data.data.name
-    }
 
     return (
         <View style={styles.container}>
             <View style={{ height: hp('10%'), backgroundColor: 'transparent', justifyContent: 'flex-end', flexDirection: 'row' }}>
-                {/* <Icon name="chevron-back-outline" style={{ paddingLeft: wp('1%'), color: 'black', top: hp('2%') }} size={30} onPress={() => { navigation.goBack() }} /> */}
                 <Icon name="home" style={{ color: 'black', top: hp('6%'), marginRight: wp('6%') }} size={30} onPress={() => { navigation.navigate("HomeDrawer") }} />
             </View>
             <View style={{ borderBottomColor: '#b4b4b4', borderBottomWidth: 1, width: wp('100%'), height: hp('100%'), }} >
@@ -84,24 +66,19 @@ const VaucherScreen = ({ route, navigation, }) => {
                         </View>
                     </View>
                 </CardItem>
-                {/* <Card style={{borderRadius:10}}> */}
                 <CardItem style={{ flexDirection: 'column', marginTop: hp('1%'), height: hp('63%'), width: wp('80%'), shadowColor: 'black', shadowRadius: 10, shadowOpacity: 0.8, shadowOffset: { width: -1, height: -3 }, elevation: 8, borderRadius: 20, alignSelf: 'center' }}>
                     <Text style={{ width: wp('58%'), color: '#3a4047', fontWeight: 'bold', fontFamily: "Rubik-Medium", fontSize: 18, textAlign: 'center', marginTop: hp('2%') }}>{data.data.description} for {data.data.prix} dollar </Text>
                     <View style={{ marginTop: hp('2%'), flexDirection: 'column', alignItems: 'center' }}>
                         <Text style={{ marginBottom: hp('1%') }}>{data.username}</Text>
                         <Text style={styles.text}> {data.data.name}</Text>
                     </View>
-                    {/* <View style={{ flexDirection: 'row', marginTop: hp('1%'), marginBottom: hp('0.5%') }}>
-                        <Text style={{ marginTop: hp('0.5%'), marginLeft: wp('0.5%'), color: '#19d825', fontSize: 16, textDecorationLine: 'underline' }}>Modifier infos</Text>
-                    </View> */}
+                   
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', top: hp('2%'), bottom: hp('0.5%'), width: wp('80%') }}>
-                        {/* <View style={{ width: wp('3%'), height: hp('3%'), backgroundColor: '#e2e2e2', borderTopRightRadius: 150, borderBottomRightRadius: 150, top: hp('1%'), right: wp('0.1%')}} /> */}
                         <Text style={{ top: hp('0.5%'), left: wp('1%'), color: '#e2e2e2', fontSize: 19, textAlign: 'center' }}>- - - - - - - - - - - - - - - - - - - - - - - - - - - - </Text>
-                        {/* <View style={{ width: wp('3%'), height: hp('3%'), backgroundColor: '#e2e2e2', borderTopLeftRadius: 150, borderBottomLeftRadius: 150, top: hp('1%'), marginLeft: wp('1.5%') }} /> */}
                     </View>
                     <View style={{ marginTop: hp('5%') }}>
                         <QRCode
-                            value={data.codeFoodealzz}
+                            value={data.codeFoodorder}
                             size={hp('22%')}
                             logo={logoFromFile}
                             logoSize={50} />
@@ -111,7 +88,6 @@ const VaucherScreen = ({ route, navigation, }) => {
                     </View>
 
                 </CardItem>
-                {/* </Card> */}
             </View>
 
         </View>

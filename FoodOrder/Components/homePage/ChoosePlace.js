@@ -24,7 +24,6 @@ const ChoosePlace = ({ route, navigation }) => {
     });
     const [newdata, setNewData] = React.useState([]);
     useEffect(() => {
-        // const newCentres = data.data.map((item) => ({ key: item.id, name: item.restaurant.name, address: item.restaurant.address, logo: item.restaurant.logourl, rating: item.restaurant.commission_rate }));
         setNewData(route.params.itemData)
     }, [])
 
@@ -34,7 +33,6 @@ const ChoosePlace = ({ route, navigation }) => {
             longitude: item.longitude,
             nameLocation: item.name
         }
-        // console.log(addressComponent)
         data.favorite = []
         data.favorite.push(loc)
         try {
@@ -62,7 +60,6 @@ const ChoosePlace = ({ route, navigation }) => {
                 <Avatar source={require('../../assets/logolocation.png')} />
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
-                    {/* <ListItem.Subtitle>{item.latitude},{item.longitude}</ListItem.Subtitle> */}
                 </ListItem.Content>
                 <ListItem.Chevron />
             </ListItem>

@@ -18,45 +18,7 @@ import { Picker } from '@react-native-picker/picker';
 import en from '../model/local_en.json'
 
 const DealsActifsCard = ({ itemData, navigation }) => {
-
-    const [data, setData] = React.useState({
-        error: '',
-        data: [],
-        reserved: [],
-        datadata: [],
-        userid: null,
-        motif: ''
-    });
-    const [isvisible, setIsVisible] = React.useState(false);
-
-    const showDialog = () => {
-        setIsVisible(true);
-    };
-    const handleCancel = () => {
-        setIsVisible(false);
-    };
-
-    const MotifInputChange = (val) => {
-        setData({
-            ...data,
-            motif: val
-        });
-    }
-    const onFinich = () => {
-        if (data.motif == '') {
-            Toast.show('Veuillez Choisir le motif de votre Annulation')
-        }
-        else {
-            axios
-                .put(`${config.url}/reservedCouponUpdate/${itemData.key}`, {
-                    type: 'expire',
-                    motif: data.motif
-                })
-                .then(res => handleCancel(),Toast.show("Your Reservation has been canceled! Please refresh the page to remove it from the list"))
-                .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
-        }
-    }
-
+  
     return (
         <SafeAreaView style={{ height: hp('12%'), width: wp('68%'), marginLeft: wp('0%'), marginTop: hp('0.5%'), borderRadius: 15 }}>
             <View style={{ height: null, marginTop: hp('2%'), marginLeft: wp('1%'), marginRight: wp('3%'), borderRadius: 8, marginBottom: hp('1%'), flexDirection: 'row' }} >

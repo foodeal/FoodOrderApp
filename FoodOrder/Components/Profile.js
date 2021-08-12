@@ -25,6 +25,8 @@ import Toast from 'react-native-simple-toast';
 const Profile = ({ navigation, token }) => {
 
 
+  //this function related to share button
+    /////////////////////////////////////
   const myCustomShare = async () => {
     if (Platform.OS) {
       const shareOptions = {
@@ -50,6 +52,10 @@ const Profile = ({ navigation, token }) => {
       }
     }
   };
+  /////////////////////////////////////
+
+
+
   const [somme, setSomme] = React.useState(0)
   const [loading, setLoading] = React.useState(true);
   const [lengh, setLengh] = React.useState(0)
@@ -133,7 +139,6 @@ const Profile = ({ navigation, token }) => {
     ])
   };
 
-
   const Fbcall = () => {
     Linking.openURL('fb://page/109398583876856');
   };
@@ -205,13 +210,15 @@ const Profile = ({ navigation, token }) => {
         </Dialog.Container>
     </View>
   )
-  // console.log(data.data.user_id)
+  // Function called when user presson delete account button
+  /////////////////////////////////////
   const deleteuser = () => {
     axios
       .delete(`${config.url}/users/${data.data.user_id}`)
       .then(res => { if (res.data == 'User Deleted!') { signOut(), _hidedialog } })
       .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
   }
+  /////////////////////////////////////
 
 
   if (loading && token !== null) {

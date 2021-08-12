@@ -65,7 +65,7 @@ const WebVieww = ({ navigation, route }) => {
           const notificationObj = {
             app_id: '643687b9-61ec-48ba-916b-7d1b22e2875a',
             contents: { en: "You have a new paid reservation" },
-            headings: { en : "New Paid Reservation" },
+            headings: { en: "New Paid Reservation" },
             include_player_ids: route.params.itemData.deals.restaurant.OnesignalId.split(",")
           };
           console.log(`${route.params.itemData.deals.restaurant.OnesignalId}`)
@@ -79,9 +79,6 @@ const WebVieww = ({ navigation, route }) => {
         }
       })
       .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
-  }
-  const backButtonHandler = () => {
-    if (webviewRef.current) webviewRef.current.goBack()
   }
 
   const checkpayment = () => {
@@ -107,10 +104,6 @@ const WebVieww = ({ navigation, route }) => {
         console.log("AXIOS ERROR: ", err);
       })
   }
-  const javascript = `
-  document.body.style.backgroundColor = 'orange';
-  window.alert('This is javascript');
-    `;
 
   return <>
     {

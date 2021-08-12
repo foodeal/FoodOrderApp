@@ -29,9 +29,6 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 
 
-
-
-
 const InitMap = ({ navigation }) => {
 
   const [data, setData] = React.useState({
@@ -100,64 +97,11 @@ const InitMap = ({ navigation }) => {
     }
   }
 
-  const [searchKeyword, setsearchKeyword] = React.useState('');
-
   const map = useRef();
 
-  const RequestPermission = async () => {
-    if (Platform.OS === 'ios') {
-      var response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-      console.log('iPhone: ' + response);
 
-      if (response === 'granted') {
-        console.log('You can use the location');
-      }
-    } else {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Foodealz App Location Permission',
-            message:
-              ' Foodealz App needs access to your Location ',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          },
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('You can use the location');
-        } else {
-          console.log('Location permission denied');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    }
-  }
-
-  const requestLocationPermission = async () => {
-    if (Platform.OS === 'ios') {
-      var response = await request(PERMISSIONS.IOS.LOCATION_ALWAYS);
-      console.log('iPhone: ' + response);
-
-      if (response === 'granted') {
-        reversegeo();
-      }
-    } else {
-      var checkk = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-      console.log(checkk)
-      if (checkk == 'granted') {
-        reversegeo();
-      } else {
-        // var response =  await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-        var checkk = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-        console.log(checkk)
-
-      }
-    }
-  }
-
+  // Function for current position
+  ///////////////////////////////////
   const locateCurrentPosition = () => {
     Geolocation.getCurrentPosition(
       (position) => {
@@ -213,6 +157,8 @@ const InitMap = ({ navigation }) => {
       }
     );
   }
+  ///////////////////////////////////
+
 
   const searchFilterFunction = (text) => {
     const newData = data.data.filter((item) => {
@@ -240,6 +186,7 @@ const InitMap = ({ navigation }) => {
       navigation.navigate("HomeDrawer", { itemData: data.favorite })
     }
   };
+
 
   const getDataFavorite = async (id) => {
     const url = `${config.url}/finduserFavorite/${id}`;
@@ -271,6 +218,9 @@ const InitMap = ({ navigation }) => {
         })
       })
   };
+
+  //Functions allow to take the name of place through coordinates
+  ///////////////////////////////////
   const PindragReversegeo = async (region) => {
     Geocoder.init("AIzaSyD1lN2ArTGGjhdZrR1JI5bXj58JU9V5iUE"); // use a valid API key
     Geocoder.from(region.latitude, region.longitude)
@@ -297,7 +247,6 @@ const InitMap = ({ navigation }) => {
       })
       .catch(error => console.warn(error));
   }
-
   const reversegeo = () => {
     if (Platform.OS == 'ios') {
       Geolocation.requestAuthorization();
@@ -327,6 +276,7 @@ const InitMap = ({ navigation }) => {
         });
     }
   }
+  ///////////////////////////////////
 
   useEffect(() => {
     setTimeout(async () => {
@@ -364,9 +314,7 @@ const InitMap = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor='transparent' barStyle='dark-content' />
       <View style={{ height: hp('13%'), backgroundColor: 'white', justifyContent: 'flex-start', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
-        {/* <Icon name="chevron-back-outline" style={{ paddingLeft: wp('1%'), color: 'black', top: hp('2%') }} size={30} onPress={() => { navigation.goBack() }} /> */}
         <Text style={{ paddingLeft: wp('1%'), color: 'black', top: hp('7%'), fontWeight: 'bold', fontSize: 16, textAlign: 'center', width: wp('80%'), justifyContent: 'center', alignContent: 'center' }}>{en.INITMAP_TITLE}</Text>
-        {/* <Icon name="home" style={{ color: 'black', top: hp('2%'), marginRight: wp('3%') }} size={30} onPress={() => { navigation.navigate("HomeDrawer") }} /> */}
       </View>
       <View style={{ flex: 8 }}>
         <MapView
@@ -375,16 +323,11 @@ const InitMap = ({ navigation }) => {
           region={data.region}
           minZoomLevel={10}
           maxZoomLevel={20}
-          // showsUserLocation={true}
           scrollEnabled={true}
           followsUserLocation={true}
           showsMyLocationButton={false}
           showsPointsOfInterest={true}
-          // onPress={(coordinate) => console.log(coordinate.nativeEvent.coordinate)}
-          // onMarkerDragStart={(e) => console.log(e.nativeEvent.coordinate)}
-          // onMarkerPress={(e) => console.log(e.nativeEvent.coordinate)}
           onRegionChangeComplete={region => { onRegionChange(region) }}
-          // onMarkerDrag={(e) => console.log(e.nativeEvent.coordinate)}
           ref={map}
         >
           <Marker

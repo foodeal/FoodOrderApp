@@ -21,6 +21,9 @@ const DealsUtilisesCardConfirmer = ({ itemData, navigation }) => {
     const [isvisible, setIsVisible] = React.useState(false);
     const [rating, setRating] = React.useState(0);
     const [voter, setVoter] = React.useState(itemData.voter)
+
+    //Functions related to note button where user rate a restaurant's offer
+    /////////////////////////////////
     const showdialog = () => {
         setIsVisible(true);
     };
@@ -54,10 +57,14 @@ const DealsUtilisesCardConfirmer = ({ itemData, navigation }) => {
                 .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
         }
     };
-
     const handleRating = (rating) => {
         setRating(rating);
     }
+    /////////////////////////////////
+
+    
+    //View called when user want to note a restaurant's offer
+    /////////////////////////////////
     const dialog = () => (
         <View style={{ width: wp('80%'), alignItems: 'center' }}>
             <View style={{ width: wp('75%'), marginBottom: hp('1%') }}>
@@ -81,6 +88,7 @@ const DealsUtilisesCardConfirmer = ({ itemData, navigation }) => {
             </View>
         </View>
     );
+    /////////////////////////////////
 
     return (
         <SafeAreaView style={{ height: hp('12%'), width: wp('90%'), marginLeft: wp('0%'), marginTop: hp('0.5%'), borderRadius: 15 }}>

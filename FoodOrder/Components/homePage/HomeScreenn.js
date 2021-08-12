@@ -138,6 +138,9 @@ const HomeScreenn = ({ itemData, navigation, token, name, neww }) => {
     return haversine(start, end).toFixed(1);
   };
 
+
+  // Function called when the interface in charge to display all the offre for this day and the place choose by the user
+  ///////////////////////////////////////
   const getData = async () => {
     const url = `${config.url}/deals`;
     let location;
@@ -280,60 +283,25 @@ const HomeScreenn = ({ itemData, navigation, token, name, neww }) => {
     ]).then(() => setFetched(true))
       .catch(ex => console.error(ex));
   };
-
+///////////////////////////////////////
   const renderItem = ({ item }) => {
-    // const date = moment().format();
-    // let expirydate = moment(item.expirydate).format();
-    // let compare = moment(date).isAfter(expirydate)
-    // const qt = item.quantity - item.nbre_redeemed_deal
-    // let quantity;
-    // quantity = null;
-    // if(qt <= 0){
-    //   quantity = 0
-    // }else{
-    //   quantity = qt
-    // }
-    // const result = (quantity == 0 || compare) || (quantity == 0 && compare)
-    // if (item.deals.restaurant.rating == 5 && result == false) {
     return (
       <DealCard itemData={item} favorite={data.location} token={token} navigation={navigation} />
     );
     //} 
   };
   const renderItemDeallast = ({ item }) => {
-    // const qt = item.quantity - item.nbre_redeemed_deal
-    // let quantity;
-    // quantity = null;
-    // if (qt <= 0) {
-    //   quantity = 0
-    // } else {
-    //   quantity = qt
-    // }
-    // const date = moment().format();
-    // let expirydate = moment(item.expirydate).format();
-    // let compare = moment(date).isAfter(expirydate)
-    // let diffr = moment.duration(moment(expirydate).diff(moment(date)));
-    // let hours2 = parseInt(diffr.asHours())
-    // let time = hours2 === 0 ? true : false;
-    // let compare2 = !compare && time;
-    // let compare3 = quantity < 20 && quantity > 0
-    // if (compare2 && compare3) {
     return (
       <Deallast itemData={item} favorite={data.location} token={token} navigation={navigation} />
     );
-    // } else if (!compare && compare3) {
-    //   return <Deallast itemData={item} favorite={data.location} token={token} navigation={navigation} />
-    // } else {
-    //   return true
-    // }
   };
-
   const renderItemDealLouper = ({ item }) => {
     return (
       <DealLouper itemData={item} favorite={data.location} token={token} navigation={navigation} />
     );
     // }
   };
+  
   const renderItemdeal = ({ item }) => {
     const date = moment().format();
     let expirydate = moment(item.expirydate).format();

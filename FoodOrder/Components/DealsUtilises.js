@@ -45,6 +45,9 @@ const DealsUtilises = ({ navigation }) => {
     }, 500);
   }, [navigation]);
 
+
+  // Function called when the interface in charge to display all the offre reserved and paid by the user for this day
+  /////////////////////////////////
   const getData = async (id) => {
     const url = `${config.url}/couponsdealuser/${id}`;
     await fetch(url)
@@ -67,7 +70,7 @@ const DealsUtilises = ({ navigation }) => {
         setLoading(false)
       })
   };
-
+  /////////////////////////////////
 
   const renderItem = ({ item }) => {
     return (
@@ -79,7 +82,7 @@ const DealsUtilises = ({ navigation }) => {
             <Text style={{ marginLeft: wp('1%'), fontSize: 12 }}> {item.start}h{item.startminu} to {item.end}h{item.endminu}</Text>
           </View>
           <View style={{ flexDirection: 'row', marginTop: hp('1%') }}>
-            <Text style={{ marginLeft: wp('1%'), fontWeight: "bold" }}>Status: <Text style={{ color: "#36b3c9",fontSize:10 }}>In progress</Text></Text>
+            <Text style={{ marginLeft: wp('1%'), fontWeight: "bold" }}>Status: <Text style={{ color: "#36b3c9", fontSize: 10 }}>In progress</Text></Text>
           </View>
         </View>
       </View>
@@ -96,11 +99,11 @@ const DealsUtilises = ({ navigation }) => {
   else {
     return (
       <View style={styles.Container}>
-        { data.datadata == '' ?
+        {data.datadata == '' ?
           <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Image source={require('../assets/noitemfound.png')} style={{ width: wp('50%'), height: hp('20%'), marginBottom: hp('2%') }} />
-            <Text style = {{fontWeight: 'bold', textAlign: 'center', marginBottom: hp ("1%")}}> No reservations used </Text>
-             <Text style = {{width: wp ('60%'), textAlign:'center', color:'#686663'}}> The baskets that have been retrieved can be found here </Text>
+            <Text style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: hp("1%") }}> No reservations used </Text>
+            <Text style={{ width: wp('60%'), textAlign: 'center', color: '#686663' }}> The baskets that have been retrieved can be found here </Text>
           </View>
           :
           <FlatList

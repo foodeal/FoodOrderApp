@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text,  Image,  TextInput, Alert, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, TextInput, Alert, ImageBackground, ScrollView } from 'react-native';
 import Button from 'react-native-paper/lib/commonjs/components/Button';
 import axios from 'axios';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -31,6 +31,9 @@ const Forget = ({ navigation }) => {
       mail: ''
     })
   }
+
+  //  when user forget his password ,they tape his mail where a temporary password will be send to his mailbox, this function called when user press Receive an email button
+  /////////////////////////////// 
   const onForget = () => {
     console.log(data.mail)
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -43,10 +46,10 @@ const Forget = ({ navigation }) => {
           mail: data.mail,
         })
         .then(res => {
-          if (res.data == "check your mail") { 
-            Toast.show('Verify Your Email'); 
-            navigation.navigate('SignInScreen') 
-          }else{
+          if (res.data == "check your mail") {
+            Toast.show('Verify Your Email');
+            navigation.navigate('SignInScreen')
+          } else {
             Toast.show('Please verify your email address.')
           }
         })
@@ -55,12 +58,12 @@ const Forget = ({ navigation }) => {
     }
 
   }
-
+  ///////////////////////////////
   return (
 
     <View style={styles.container} >
       <ImageBackground source={require('../Images/groupe_549.png')} style={styles.image}>
-        <View style={{marginTop:hp('23%')}}>
+        <View style={{ marginTop: hp('23%') }}>
 
           <Image
             //We are showing the Image from online
@@ -75,27 +78,27 @@ const Forget = ({ navigation }) => {
             <Text style={styles.textgray}>{en.TITLE_FORGET_PW_2}</Text>
           </View>
           <View style={styles.form} >
-          <AntDesign
-            name="mail"
-            color="black"
-            size={20}
-          />
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Email"
-            placeholderTextColor="#666666"
-            underlineColorAndroid="#00CED1"
-            name="mail"
-            ref={myTextInput}
-            // onSubmitEditing={(e) => { onsubmit(e) }}
-            onChangeText={(val) => {onChange(val)}}
+            <AntDesign
+              name="mail"
+              color="black"
+              size={20}
+            />
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Email"
+              placeholderTextColor="#666666"
+              underlineColorAndroid="#00CED1"
+              name="mail"
+              ref={myTextInput}
+              // onSubmitEditing={(e) => { onsubmit(e) }}
+              onChangeText={(val) => { onChange(val) }}
 
-          />
+            />
           </View>
 
           <Button style={styles.button} mode="contained" onPress={() => { onForget() }}>
-          {en.BUTTON_RECEIVE_MAIL}
-            </Button>
+            {en.BUTTON_RECEIVE_MAIL}
+          </Button>
         </View>
 
       </ImageBackground>
@@ -118,10 +121,10 @@ const styles = StyleSheet.create({
 
   },
   logoStyle: {
-    height: Platform.OS === 'ios' ? hp('20%'):hp('25%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('20%') : hp('25%'), // 70% of height device screen
     width: wp('80 %'),
-    marginLeft:wp('8.5%'),
-    marginTop:hp('2.5%')
+    marginLeft: wp('8.5%'),
+    marginTop: hp('2.5%')
 
   },
 
@@ -132,7 +135,7 @@ const styles = StyleSheet.create({
 
   },
   TextInput: {
-    height: Platform.OS === 'ios' ? hp('4%'):hp('8%'), // 70% of height device screen
+    height: Platform.OS === 'ios' ? hp('4%') : hp('8%'), // 70% of height device screen
     // paddingLeft:10,
     // marginTop: Platform.OS === 'ios' ? 0 : -12,
     // margin: 15,
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
     // flex: 10,
     // borderBottomWidth:1,
     // borderBottomColor:"#00CED1",
-    marginTop: Platform.OS === 'ios' ? -7: -15,
+    marginTop: Platform.OS === 'ios' ? -7 : -15,
     paddingLeft: 10,
     paddingRight: 10,
     color: '#05375a',
@@ -172,7 +175,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     color: "#3a4047",
-    marginTop:hp('1%')
+    marginTop: hp('1%')
   },
   image: {
     height: hp('120%'), // 70% of height device screen

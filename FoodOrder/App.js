@@ -13,7 +13,8 @@ const App = () => {
 
 
   const [loading, setLoading] = React.useState(false);
-
+//////////////////////
+  //Equal to Redux. we use this function for manage our Authentification Sign in / Sign out
   const initialLoginState = {
     isLoading: true,
     userName: null,
@@ -23,7 +24,6 @@ const App = () => {
     new: null
     // screen: null
   };
-
   const loginReducer = (prevState, action) => {
     switch (action.type) {
       case 'RETRIEVE_TOKEN':
@@ -68,7 +68,6 @@ const App = () => {
         };
     }
   };
-
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
 
   const authContext = React.useMemo(() => ({
@@ -129,7 +128,7 @@ const App = () => {
       dispatch({ type: 'LOGINTOCON' });
     },
   }), []);
-
+//////////////////////
   useEffect(() => {
     setTimeout(async () => {
       setLoading(true);
@@ -198,8 +197,10 @@ const App = () => {
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         {loginState.userToken !== null || loginState.name == 'guest' ?
-          <ScreenStackScreen token={loginState.userToken} name={loginState.name} neww={loginState.new} />
+          //if there is a token in application cache  this line forward us to Home interface and all his stack interface
+          <ScreenStackScreen token={loginState.userToken} name={loginState.name} neww={loginState.new} /> 
           :
+          //else we will be in Auth Stack to sign in or sign up  
           <RootStackScreen />
         }
       </NavigationContainer>

@@ -42,6 +42,9 @@ const DealsExpired = ({ navigation }) => {
     }, 1000);
   }, [navigation]);
 
+
+  // Function called when the interface in charge to display all the offre expired that the user reserve and didn't pick up them
+  /////////////////////////////////
   const getData = (id) => {
     const url = `${config.url}/ExpiredResCou/${id}`;
     setLoading(false)
@@ -53,7 +56,7 @@ const DealsExpired = ({ navigation }) => {
           ...data,
           data: res,
           reserved: res.reserved_deal,
-          datadata: res.reserved_deal.map((item) => ({ key: item.id,motif: item.motif, type: item.type, rating: item.deal_scheduled.deals.restaurant.rating, name: item.deal_scheduled.deals.restaurant.name, image: item.deal_scheduled.deals.imageurl, time: item.time, name: item.deal_scheduled.deals.restaurant.name, nbre: item.nbre_coupons, discount: item.deal_scheduled.deals.discount, payment: item.payement, user_id: item.user_id, deal_scheduled_id: item.deal_scheduled_id, deal_description: item.deal_scheduled.deals.deal_description, restaurant_id: item.deal_scheduled.deals.restaurant_id })),
+          datadata: res.reserved_deal.map((item) => ({ key: item.id, motif: item.motif, type: item.type, rating: item.deal_scheduled.deals.restaurant.rating, name: item.deal_scheduled.deals.restaurant.name, image: item.deal_scheduled.deals.imageurl, time: item.time, name: item.deal_scheduled.deals.restaurant.name, nbre: item.nbre_coupons, discount: item.deal_scheduled.deals.discount, payment: item.payement, user_id: item.user_id, deal_scheduled_id: item.deal_scheduled_id, deal_description: item.deal_scheduled.deals.deal_description, restaurant_id: item.deal_scheduled.deals.restaurant_id })),
           error: res.error || null,
         });
         setLoading(false)
@@ -68,6 +71,7 @@ const DealsExpired = ({ navigation }) => {
 
       })
   };
+  /////////////////////////////////
 
 
   const renderItem = ({ item }) => {
@@ -82,15 +86,15 @@ const DealsExpired = ({ navigation }) => {
         <Bubbles size={10} color="#36b3c9" />
       </View>
     )
-  } 
+  }
   else {
     return (
       <SafeAreaView style={styles.Container}>
         {data.datadata.length == 0 ?
           <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Image source={require('../assets/noitemfound.png')} style={{ width: wp('50%'), height: hp('20%'), marginBottom: hp('2%') }} />
-            <Text style = {{fontWeight: 'bold', textAlign: 'center', marginBottom: hp ("1%")}}> No past reservations </Text>
-            <Text style = {{width: wp ('65%'), textAlign:'center', color:'#686663'}}> The baskets that have been canceled or reserved without retrieved can be found here </Text>
+            <Text style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: hp("1%") }}> No past reservations </Text>
+            <Text style={{ width: wp('65%'), textAlign: 'center', color: '#686663' }}> The baskets that have been canceled or reserved without retrieved can be found here </Text>
           </View>
           :
           <FlatList

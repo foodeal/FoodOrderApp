@@ -47,7 +47,7 @@ const Verif = ({ navigation }) => {
     let num = data.num1 + data.num2 + data.num3 + data.num4
 
     if (data.num1 == "" || data.num2 == "" || data.num3 == "" || data.num4 == "") {
-      Toast.show('Il faut remplir tous les champs')
+      Toast.show('You must fill in all the fields')
     }
     else {
       setData({

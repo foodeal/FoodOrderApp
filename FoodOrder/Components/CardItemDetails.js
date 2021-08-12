@@ -59,48 +59,6 @@ const CardItemDetails = ({ navigation, route }) => {
     const [visibleguest, setVisibleguest] = React.useState(false);
     const { LoginToContinu } = React.useContext(AuthContext);
 
-    const showDialogguest = () => {
-        setVisibleguest(true);
-    };
-    const handleCancelguest = () => {
-        setVisibleguest(false);
-    };
-    const handleoptionOK = () => {
-        LoginToContinu()
-    }
-
-    const handleCancelcoupon = () => {
-        setToggleCheckBox(false)
-        setData({
-            ...data,
-            code: '',
-            reduce: false
-        })
-        setVisiblecoupon(false);
-    };
-    const handleoptionOKcoupon = () => {
-        if (data.code == "FOODZ21") {
-            setData({
-                ...data,
-                reduce: true,
-                code: ''
-            })
-            setVisiblecoupon(false);
-        } else {
-            setData({
-                ...data,
-                reduce: false,
-                code: ''
-            })
-            setVisiblecoupon(false);
-            setToggleCheckBox(false);
-            Toast.show('Discount code is invalid')
-
-        }
-
-    }
-
-
     const [data, setData] = React.useState({
         nbre: 1,
         date: null,
@@ -175,16 +133,65 @@ const CardItemDetails = ({ navigation, route }) => {
             }).start()
             const codeFoodOrder = `${route.params.itemData.user_id}${new Date(Date.now())}`
 
+            //generate code to use after with QRcode
             sha256(codeFoodOrder).then((hash) => {
                 setCodee(`foodr-${hash}`)
                 setCodep(`foodp-${hash}`)
             });
 
-            // console.log(itemdata.deals.restaurant.OnesignalId.split(","))
         }, 200);
         return () => ac.abort();
     }, [totalDuration]);
 
+
+
+    //when user connect as a guest and want to reserve or add to his favorite a restaurant , popup will be displayed to tell user that he need to sign in to do this action
+    ////////////////////////////////
+    const showDialogguest = () => {
+        setVisibleguest(true);
+    };
+    const handleCancelguest = () => {
+        setVisibleguest(false);
+    };
+    const handleoptionOK = () => {
+        LoginToContinu()
+    }
+    ////////////////////////////////
+
+
+
+    // this function for popup related to Discount code
+    /////////////////////////////////
+    const handleCancelcoupon = () => {
+        setToggleCheckBox(false)
+        setData({
+            ...data,
+            code: '',
+            reduce: false
+        })
+        setVisiblecoupon(false);
+    };
+    const handleoptionOKcoupon = () => {
+        if (data.code == "FOODZ21") {
+            setData({
+                ...data,
+                reduce: true,
+                code: ''
+            })
+            setVisiblecoupon(false);
+        } else {
+            setData({
+                ...data,
+                reduce: false,
+                code: ''
+            })
+            setVisiblecoupon(false);
+            setToggleCheckBox(false);
+            Toast.show('Discount code is invalid')
+
+        }
+
+    }
     const Checkcoupon = async (newValue) => {
         if (newValue) {
             setToggleCheckBox(newValue)
@@ -197,7 +204,13 @@ const CardItemDetails = ({ navigation, route }) => {
             })
         }
     }
+    /////////////////////////////////
 
+
+
+
+    // this functions  related to like Button
+    /////////////////////////////////
     const searchFilterFunction = async () => {
         var response = await AsyncStorage.getItem('listOflikes');
         var listOfLikes = await JSON.parse(response);
@@ -217,16 +230,6 @@ const CardItemDetails = ({ navigation, route }) => {
             }
         }
     };
-
-    const quantity = () => {
-        const quantity = itemdata.quantity - itemdata.nbre_redeemed_deal
-        if (quantity >= 0) {
-            setDealrestant(quantity)
-        } else {
-            setDealrestant(0)
-        }
-    }
-
     const _updatefavorite = async () => {
         let response = await AsyncStorage.getItem('listOflikes');
         var listOfLikes = await JSON.parse(response) || [];
@@ -238,73 +241,6 @@ const CardItemDetails = ({ navigation, route }) => {
         );
         // console.log(favorites);
     }
-
-
-    const dialCall = () => {
-
-        let phoneNumber = '';
-
-        if (Platform.OS === 'android') {
-            phoneNumber = `tel:${itemdata.deals.restaurant.phone}`;
-        }
-        else {
-            phoneNumber = `telprompt:${itemdata.deals.restaurant.phone}`;
-        }
-
-        Linking.openURL(phoneNumber);
-    };
-
-    const myCustomShare = async () => {
-        if (Platform.OS) {
-            const shareOptions = {
-                message: itemdata.deals.deal_description + ' ' + `You can have this offer through the FoodOrder app `,
-                // urls: [files.image1, files.image2]
-            }
-            try {
-                await Share.open(shareOptions);
-                // console.log(JSON.stringify(ShareResponse));
-            } catch (error) {
-                console.log('Error => ', error);
-            }
-        } else {
-            const shareOptions = {
-                message: itemdata.deals.deal_description + ' ' + ` You can have this offer through the FoodOrder app`,
-                // urls: [files.image1, files.image2]
-            }
-            try {
-                await Share.open(shareOptions);
-                // console.log(JSON.stringify(ShareResponse));
-            } catch (error) {
-                console.log('Error => ', error);
-            }
-        }
-    };
-
-    const latitude = itemdata.deals.restaurant.latitude;
-    const longitude = itemdata.deals.restaurant.longitude;
-    const label = itemdata.deals.restaurant.name;
-    const dialmap = () => {
-        const url = Platform.select({
-            ios: "maps:" + "?ll=" + latitude + "," + longitude + "?q=" + label,
-            android: "geo:" + latitude + "," + longitude + "?q=" + label
-        });
-
-        Linking.canOpenURL(url).then(supported => {
-            if (supported) {
-                return Linking.openURL(url);
-            } else {
-                browser_url =
-                    "https://www.google.fr/maps/@" +
-                    latitude +
-                    "," +
-                    longitude +
-                    "?q=" +
-                    label;
-                return Linking.openURL(browser_url);
-            }
-        });
-    }
-
     const removeFavorit = async (id) => {
         // console.log(id)
         try {
@@ -320,7 +256,6 @@ const CardItemDetails = ({ navigation, route }) => {
             console.log('error: ', error);
         }
     };
-
     const favoritecall = async () => {
         console.log("lool")
         if (route.params.token === null) {
@@ -354,7 +289,103 @@ const CardItemDetails = ({ navigation, route }) => {
             }
         }
     }
+    /////////////////////////////////
 
+
+    // this function count number remaining of the offer
+    /////////////////////////////////
+    const quantity = () => {
+        const quantity = itemdata.quantity - itemdata.nbre_redeemed_deal
+        if (quantity >= 0) {
+            setDealrestant(quantity)
+        } else {
+            setDealrestant(0)
+        }
+    }
+    /////////////////////////////////
+
+
+
+
+    // this functions  related to call Button
+    /////////////////////////////////
+    const dialCall = () => {
+
+        let phoneNumber = '';
+
+        if (Platform.OS === 'android') {
+            phoneNumber = `tel:${itemdata.deals.restaurant.phone}`;
+        }
+        else {
+            phoneNumber = `telprompt:${itemdata.deals.restaurant.phone}`;
+        }
+
+        Linking.openURL(phoneNumber);
+    };
+    /////////////////////////////////
+
+
+    //this function related to share button
+    /////////////////////////////////////
+    const myCustomShare = async () => {
+        if (Platform.OS) {
+            const shareOptions = {
+                message: itemdata.deals.deal_description + ' ' + `You can have this offer through the FoodOrder app `,
+                // urls: [files.image1, files.image2]
+            }
+            try {
+                await Share.open(shareOptions);
+                // console.log(JSON.stringify(ShareResponse));
+            } catch (error) {
+                console.log('Error => ', error);
+            }
+        } else {
+            const shareOptions = {
+                message: itemdata.deals.deal_description + ' ' + ` You can have this offer through the FoodOrder app`,
+                // urls: [files.image1, files.image2]
+            }
+            try {
+                await Share.open(shareOptions);
+                // console.log(JSON.stringify(ShareResponse));
+            } catch (error) {
+                console.log('Error => ', error);
+            }
+        }
+    };
+    /////////////////////////////////////
+
+    const latitude = itemdata.deals.restaurant.latitude;
+    const longitude = itemdata.deals.restaurant.longitude;
+    const label = itemdata.deals.restaurant.name;
+
+    //this function related to Map button
+    /////////////////////////////////////
+    const dialmap = () => {
+        const url = Platform.select({
+            ios: "maps:" + "?ll=" + latitude + "," + longitude + "?q=" + label,
+            android: "geo:" + latitude + "," + longitude + "?q=" + label
+        });
+
+        Linking.canOpenURL(url).then(supported => {
+            if (supported) {
+                return Linking.openURL(url);
+            } else {
+                browser_url =
+                    "https://www.google.fr/maps/@" +
+                    latitude +
+                    "," +
+                    longitude +
+                    "?q=" +
+                    label;
+                return Linking.openURL(browser_url);
+            }
+        });
+    }
+    /////////////////////////////////
+
+
+    //this function called when user want to reserve an offer and paid on site
+    /////////////////////////////////////
     const reserver = async () => {
         await AsyncStorage.setItem('code', codee)
         let price;
@@ -395,7 +426,7 @@ const CardItemDetails = ({ navigation, route }) => {
                     const notificationObj = {
                         app_id: '643687b9-61ec-48ba-916b-7d1b22e2875a',
                         contents: { en: "You have a new unpaid reservation" },
-                        headings: { en: "New unpaid reservation"},
+                        headings: { en: "New unpaid reservation" },
                         include_player_ids: itemdata.deals.restaurant.OnesignalId.split(",")
                     };
                     console.log(`${itemdata.deals.restaurant.OnesignalId}`)
@@ -411,7 +442,10 @@ const CardItemDetails = ({ navigation, route }) => {
             .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
 
     }
+    /////////////////////////////////
 
+    // View for dialog related to confirm the reservation
+    /////////////////////////////////
     const _dialog = () => (
         <View style={{ width: wp('90%'), justifyContent: 'center', alignSelf: 'center' }}>
             <View style={{ marginBottom: hp('3%'), marginTop: hp('4%'), }}>
@@ -432,7 +466,11 @@ const CardItemDetails = ({ navigation, route }) => {
             </View>
         </View>
     );
+    /////////////////////////////////
 
+
+    // View for dialog related to guest user
+    /////////////////////////////////
     const renderguest = () => (
         <Dialog.Container visible={visibleguest}>
             <Dialog.Title style={{ fontWeight: 'bold' }}>{en.BUTTON_CONNECT}</Dialog.Title>
@@ -443,6 +481,11 @@ const CardItemDetails = ({ navigation, route }) => {
             <Dialog.Button color='#36b3c9' bold={true} label="Ok" onPress={handleoptionOK} />
         </Dialog.Container>
     )
+    /////////////////////////////////
+
+
+    // View for dialog related to discount coupon
+    /////////////////////////////////
     const renderCoupon = () => (
         <Dialog.Container visible={visiblecoupon}>
             <Dialog.Title style={{ fontWeight: 'bold' }}>{en.DISCOUNT_CODE}</Dialog.Title>
@@ -459,6 +502,9 @@ const CardItemDetails = ({ navigation, route }) => {
             <Dialog.Button color='#36b3c9' bold={true} label="Confirm" onPress={handleoptionOKcoupon} />
         </Dialog.Container>
     )
+    /////////////////////////////////
+
+
     const action = () => {
         if (route.params.token === null) {
             showDialogguest()
@@ -475,6 +521,7 @@ const CardItemDetails = ({ navigation, route }) => {
             code: val
         })
     }
+
     const onOpen = () => {
         if (data.reduce && data.prix <= 5) {
             let newCentresqr = { key: itemdata.id, numero: Numero, nomPartner: itemdata.deals.restaurant.name, nbre: data.nbre, username: username, prix: 0, user_id: userid, deal_scheduled_id: itemdata.id, deal_description: itemdata.deals.deal_description, name: itemdata.deals.restaurant.name, discount: itemdata.deals.discount, start: start, end: end, startminu: startminu, endminu: endminu, description: itemdata.deals.description, commission_rate: itemdata.deals.restaurant.commission_rate, reduce: data.reduce };
@@ -558,6 +605,10 @@ const CardItemDetails = ({ navigation, route }) => {
         }
 
     }
+
+
+    // function related to increase or decrease the quantity that user want to buy 
+    /////////////////////////////////
     const editOrder = (action) => {
 
         if (action == "+") {
@@ -609,7 +660,7 @@ const CardItemDetails = ({ navigation, route }) => {
             }
         }
     }
-
+    /////////////////////////////////
     const codereduc = () => {
         if (data.reduce && data.prix <= 5) {
             return <Text style={{ fontSize: 15, padding: 10 }}>0 $</Text>
@@ -708,7 +759,7 @@ const CardItemDetails = ({ navigation, route }) => {
 
                 <View style={{ flexDirection: 'row', marginTop: hp('0%') }}>
                     <Text style={{ textAlign: 'center', fontSize: 13, marginLeft: wp('1%'), marginTop: hp('0.2%'), color: '#686663', fontFamily: 'Rubik-Regular' }}>By reserving this basket, you accept the
-                    <Text style={{ textDecorationLine: 'underline' }} > General Conditions of Use</Text> of FoodOrder</Text>
+                        <Text style={{ textDecorationLine: 'underline' }} > General Conditions of Use</Text> of FoodOrder</Text>
                 </View>
 
                 <View>

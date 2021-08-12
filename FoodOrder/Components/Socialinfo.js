@@ -48,6 +48,8 @@ const Socialinfo = ({ route, navigation }) => {
     setData({ ...data, age: res, birthday: exdate })
     hideDatePicker();
   };
+
+  
   const AddUser = () => {
     if (data.hearAboutUs == "") {
       Toast.show(`You must choose your answer from the list of heard about us`)

@@ -39,7 +39,8 @@ const EditProfileScreen = ({ route, navigation }) => {
   const [image, setImage] = useState(data.data.image);
 
 
-
+  // this function called when user press on update button 
+  //////////////////////////////////
   const update = () => {
     if (mail == "" || lastname == "" || firstname == "" || pays == "" || ville == "" || phone == "") {
       Toast.show('Il faut remplir tous les champs')
@@ -58,15 +59,12 @@ const EditProfileScreen = ({ route, navigation }) => {
         .catch(err => Toast.show(en.TOAST_CHECK_ERROR));
     }
   }
-  const onOpen = () => {
-    // modalizeRefPay.current?.close();
-    modalizeRef.current?.open();
-  };
+  //////////////////////////////////
 
   return (
     <View style={styles.container}>
-      <View style={{ height: Platform.OS === 'ios' ? hp('10%'): hp('7%'), backgroundColor: 'white', elevation: 3 }}>
-        <Iconn name="chevron-back-outline" style={{ paddingLeft: wp('4%'), color: 'black', marginTop:  Platform.OS === 'ios' ? hp('6%'): hp('3%') }} size={30} onPress={() => { navigation.goBack() }} />
+      <View style={{ height: Platform.OS === 'ios' ? hp('10%') : hp('7%'), backgroundColor: 'white', elevation: 3 }}>
+        <Iconn name="chevron-back-outline" style={{ paddingLeft: wp('4%'), color: 'black', marginTop: Platform.OS === 'ios' ? hp('6%') : hp('3%') }} size={30} onPress={() => { navigation.goBack() }} />
       </View>
       <ScrollView>
         <View style={{ margin: hp('3%') }}>

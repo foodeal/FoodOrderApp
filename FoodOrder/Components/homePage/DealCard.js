@@ -172,7 +172,7 @@ const DealCard = ({ itemData, navigation, favorite, token }) => {
                             style={{ flex: 1, width: null, height: hp('15%'), resizeMode: 'cover', borderTopLeftRadius:15,borderTopRightRadius:15 }}
                         />
                         <View style={styles.economie}>
-                            {/* <Text style={styles.teconomie}>Economisez {deals.discount}</Text> */}
+
                             <Text style={{ textAlign: 'center', color: '#ffffff', marginTop: hp('0.7%'), fontSize: 12 }}> {dealrestant} {en.TO_SAVE}</Text>
                         </View>
                         <Thumbnail scaleX={0.8} scaleY={0.8} source={{ uri: restaurant.logourl }} style={styles.logo}/>
