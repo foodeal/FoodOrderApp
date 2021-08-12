@@ -15,11 +15,7 @@
  import QrcodeScanner from './Screen/QrcodeScanner';
  import SplashScreen from 'react-native-splash-screen';
  import { View, ActivityIndicator,Alert} from 'react-native';
- import ModifierOffresAj from './Screen/ModifierOffres/ModifierOffresAj';
- import EntrerOffresAj from './Screen/EntrerOffres/EntrerOffresAj';
- import BarCode from './Screen/EntrerOffres/BarCode';
  import { AuthContext } from './components/context';
- import ScannerOffreEndAj from './Screen/EntrerOffres/ScannerOffreEndAj';
  import EditProfileScreen from './Screen/EditProfileScreen';
  import Etape2 from './Screen/EntrerOffres/Etape2';
  import Etape3 from './Screen/EntrerOffres/Etape3';
@@ -188,10 +184,6 @@
            <RootStack.Navigator headerMode='none' initialRouteName={route}>
              <RootStack.Screen name="HomeDrawer" component={MainTabScreen} initialParams={{name : page }}/>
              <RootStack.Screen name="QRcodeScanner" component={QrcodeScanner} />
-             <RootStack.Screen name="ModifierOffresAj" component={ModifierOffresAj} />
-             <RootStack.Screen name="EntrerOffresAj" component={EntrerOffresAj} />
-             <RootStack.Screen name="ScannerOffreEndAj" component={ScannerOffreEndAj} />
-             <RootStack.Screen name="BarCode" component={BarCode} />
              <RootStack.Screen name="EditProfile" component={EditProfileScreen} />
              <RootStack.Screen name="Etape1" component={Etape1} />
              <RootStack.Screen name="Etape2" component={Etape2} />
